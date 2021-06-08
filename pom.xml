@@ -1,27 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.swagger</groupId>
-  <artifactId>swagger-jaxrs-server</artifactId>
-  <packaging>jar</packaging>
-  <name>swagger-jaxrs-server</name>
+  <artifactId>swagger-cxf-server</artifactId>
+  <packaging>war</packaging>
+  <name>swagger-cxf-server</name>
+  <description>&lt;b&gt;Introduction&lt;/b&gt;&lt;br&gt;&lt;br&gt;This is collection of Organization APIs. These are used to create organization, fetch organization records, update organization and invoke organization.&lt;br&gt;&lt;br&gt; &lt;b&gt;Authentication&lt;/b&gt;&lt;br&gt;&lt;br&gt; Salesken Organization APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.</description>
   <version>1.0.0</version>
-
-  <licenses>
-    <license>
-      <name>Unlicense</name>
-      <url>http://unlicense.org</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.1.0</version>
-      </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>2.6</version>
@@ -34,7 +21,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
+      <!--plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <version>${jetty-version}</version>
@@ -45,7 +32,6 @@
           <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
           <stopPort>8079</stopPort>
           <stopKey>stopit</stopKey>
-          <stopWait>10</stopWait>
           <httpConnector>
             <port>8080</port>
             <idleTimeout>60000</idleTimeout>
@@ -78,7 +64,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -98,6 +84,15 @@
           </execution>
         </executions>
       </plugin>
+      
+      <!-- build WAR file -->
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+           <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+    </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -125,49 +120,6 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>${servlet-api-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-servlet-core</artifactId>
-      <version>${jersey2-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.media</groupId>
-      <artifactId>jersey-media-multipart</artifactId>
-      <version>${jersey2-version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.glassfish.jersey.inject</groupId>
-        <artifactId>jersey-hk2</artifactId>
-        <version>${jersey2-version}</version>
-  </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.datatype</groupId>
-        <artifactId>jackson-datatype-joda</artifactId>
-        <version>${jackson-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.jaxrs</groupId>
-      <artifactId>jackson-jaxrs-json-provider</artifactId>
-      <version>${jackson-version}</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${jackson-version}</version>
-    </dependency>
-    <!-- Base64 encoding that works in both JVM and Android -->
-    <dependency>
-      <groupId>com.brsanthu</groupId>
-      <artifactId>migbase64</artifactId>
-      <version>2.2</version>
-    </dependency>
-
-  
     <!-- Bean Validation API support -->
     <dependency>
         <groupId>javax.validation</groupId>
@@ -175,7 +127,66 @@
         <version>${beanvalidation-version}</version>
         <scope>provided</scope>
     </dependency>
-
+    <!-- CXF Client -->
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-client</artifactId>
+        <version>${cxf-version}</version>
+        <scope>test</scope>
+    </dependency>
+    
+     <!-- CXF server -->
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        <version>${cxf-version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-service-description</artifactId>
+        <version>${cxf-version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-rs-service-description-openapi-v3</artifactId>
+        <version>${cxf-version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-ws-policy</artifactId>
+        <version>${cxf-version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-wsdl</artifactId>
+        <version>${cxf-version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.jaxrs</groupId>
+        <artifactId>jackson-jaxrs-json-provider</artifactId>
+        <version>${jackson-jaxrs-version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-joda</artifactId>
+        <version>${jackson-jaxrs-version}</version>
+    </dependency>
+      <dependency>
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+          <version>2.2.6</version>
+      </dependency>
+      <dependency>
+          <groupId>javax.activation</groupId>
+          <artifactId>activation</artifactId>
+          <version>1.1.1</version>
+      </dependency>
   </dependencies>
   <repositories>
     <repository>
@@ -192,12 +203,12 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <swagger-core-version>2.0.0</swagger-core-version>
     <jetty-version>9.2.9.v20150224</jetty-version>
-    <jersey2-version>2.27</jersey2-version>
-    <jackson-version>2.9.5</jackson-version>
     <junit-version>4.13.1</junit-version>
     <logback-version>1.1.7</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
     <beanvalidation-version>1.1.0.Final</beanvalidation-version>
+    <cxf-version>3.2.4</cxf-version>
+    <jackson-jaxrs-version>2.9.1</jackson-jaxrs-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
