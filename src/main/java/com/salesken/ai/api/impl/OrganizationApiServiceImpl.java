@@ -1,28 +1,64 @@
 package com.salesken.ai.api.impl;
 
-
-
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.BadRequestException;
+
+import com.mongodb.client.MongoCollection;
 import com.salesken.ai.api.OrganizationApi;
+import com.salesken.ai.api.exception.NotFoundException;
+import com.salesken.ai.api.exception.NotFoundException.ResponseTypeEnum;
+import com.salesken.ai.dao.impl.OrganizationDaoImpl;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
 import com.salesken.ai.model.Organization;
 import com.salesken.ai.model.SaleskenResponse;
+import com.salesken.ai.utils.MongoDBUtils;
 
+import clojure.main;
 
 /**
  * Salesken Organization APIs
  *
- * <p><b>Introduction</b><br><br>This is collection of Organization APIs. These are used to create organization, fetch organization records, update organization and invoke organization.<br><br> <b>Authentication</b><br><br> Salesken Organization APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.
+ * <p>
+ * <b>Introduction</b><br>
+ * <br>
+ * This is collection of Organization APIs. These are used to create
+ * organization, fetch organization records, update organization and invoke
+ * organization.<br>
+ * <br>
+ * <b>Authentication</b><br>
+ * <br>
+ * Salesken Organization APIs are authenticated using Basic Authentication with
+ * your Authentication API Key and OAuth2. The OAuth2 are available after you
+ * sign-up with the Salesken.
  *
  */
 public class OrganizationApiServiceImpl implements OrganizationApi {
 
 	@Override
 	public List<Organization> createOrganization(List<Organization> body) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Organization> listOrganizations = new ArrayList<Organization>();
+		for (Organization organization : body) {
+			if (organization.getName() != null || organization.getWebsite() != null) {
+				new OrganizationDaoImpl().insertOne(organization);
+				listOrganizations.add(organization);
+			} else {
+				NotFoundException notFoundException = new NotFoundException();
+				notFoundException.setResponseCode(404);
+				notFoundException.setResponseType(ResponseTypeEnum.NOTFOUND);
+				throw new javax.ws.rs.NotFoundException(notFoundException.toString());
+			}
+		}
+		return listOrganizations;
+	}
+
+	public static void main(String[] args) {
+		Organization organization = new Organization();
+		List<Organization> listOrg = new ArrayList<Organization>();
+		listOrg.add(organization);
+		new OrganizationApiServiceImpl().createOrganization(listOrg);
 	}
 
 	@Override
@@ -109,4 +145,3 @@ public class OrganizationApiServiceImpl implements OrganizationApi {
 //    }
 //    
 }
-

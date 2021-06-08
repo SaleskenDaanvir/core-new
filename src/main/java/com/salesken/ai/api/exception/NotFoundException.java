@@ -22,7 +22,7 @@ public class NotFoundException   {
   @Schema(example = "Not Found", required = true, description = "")
   private String responseMessage = null;
   public enum ResponseTypeEnum {
-    FOUND("Not Found");
+    NOTFOUND("Not Found");
 
     private String value;
 
