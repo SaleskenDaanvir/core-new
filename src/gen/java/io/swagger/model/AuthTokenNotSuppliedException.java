@@ -1,7 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.model.AuthTokenNotFound;
-import io.swagger.model.ErrorType;
 import javax.validation.constraints.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,11 +19,37 @@ public class AuthTokenNotSuppliedException   {
   @Schema(example = "401", required = true, description = "")
   private Integer responseCode = null;
   
-  @Schema(required = true, description = "")
-  private AuthTokenNotFound responseMessage = null;
-  
-  @Schema(required = true, description = "")
-  private ErrorType responseType = null;
+  @Schema(example = "Auth token not supplied", required = true, description = "")
+  private String responseMessage = null;
+  public enum ResponseTypeEnum {
+    SUPPLIED("Auth token not supplied");
+
+    private String value;
+
+    ResponseTypeEnum(String value) {
+      this.value = value;
+    }
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+    @JsonCreator
+    public static ResponseTypeEnum fromValue(String text) {
+      for (ResponseTypeEnum b : ResponseTypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }  
+  @Schema(description = "")
+  private ResponseTypeEnum responseType = null;
  /**
    * Get responseCode
    * @return responseCode
@@ -51,15 +75,15 @@ public class AuthTokenNotSuppliedException   {
   **/
   @JsonProperty("responseMessage")
   @NotNull
-  public AuthTokenNotFound getResponseMessage() {
+  public String getResponseMessage() {
     return responseMessage;
   }
 
-  public void setResponseMessage(AuthTokenNotFound responseMessage) {
+  public void setResponseMessage(String responseMessage) {
     this.responseMessage = responseMessage;
   }
 
-  public AuthTokenNotSuppliedException responseMessage(AuthTokenNotFound responseMessage) {
+  public AuthTokenNotSuppliedException responseMessage(String responseMessage) {
     this.responseMessage = responseMessage;
     return this;
   }
@@ -69,16 +93,18 @@ public class AuthTokenNotSuppliedException   {
    * @return responseType
   **/
   @JsonProperty("responseType")
-  @NotNull
-  public ErrorType getResponseType() {
-    return responseType;
+  public String getResponseType() {
+    if (responseType == null) {
+      return null;
+    }
+    return responseType.getValue();
   }
 
-  public void setResponseType(ErrorType responseType) {
+  public void setResponseType(ResponseTypeEnum responseType) {
     this.responseType = responseType;
   }
 
-  public AuthTokenNotSuppliedException responseType(ErrorType responseType) {
+  public AuthTokenNotSuppliedException responseType(ResponseTypeEnum responseType) {
     this.responseType = responseType;
     return this;
   }
