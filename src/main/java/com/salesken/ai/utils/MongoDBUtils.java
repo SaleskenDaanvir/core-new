@@ -1,8 +1,6 @@
-package salesken.ai.utils;
-import java.beans.PropertyVetoException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.salesken.ai.utils;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -43,10 +41,16 @@ public class MongoDBUtils {
 	private synchronized static MongoClient getDataSource() {
 		MongoClient mongoClient = null;
 		try {
-			MongoClientURI connectionString = new MongoClientURI(DBProperties.getProperty("MONGO_CLIENT_URI"));
+			String user=DBProperties.getProperty("MONGO_USER");
+			String password = URLEncoder.encode(DBProperties.getProperty("MONGO_PASS"), StandardCharsets.UTF_8.toString());
+			String dataBase = DBProperties.getProperty("MONGO_DATABASE");
+			String url="mongodb+srv://"+user+":"+password+"@resources.tmkqk.mongodb.net/"+dataBase+"?retryWrites=true&w=majority";
+			
+			MongoClientURI connectionString = new MongoClientURI(url);
 			mongoClient = new MongoClient(connectionString);
-		    mongoDB = mongoClient.getDatabase(DBProperties.getProperty("MONGO_DATABASE"));
+		    mongoDB = mongoClient.getDatabase(dataBase);
 		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
 		return mongoClient;
