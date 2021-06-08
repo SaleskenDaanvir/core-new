@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.salesken.ai.daoImpl.UserDAOImpl;
 import com.salesken.ai.api.UserApi;
+import com.salesken.ai.api.service.UserApiService;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
 import com.salesken.ai.model.SaleskenResponse;
@@ -18,7 +19,7 @@ import com.salesken.ai.model.User;
  * <p><b>Introduction</b><br><br>This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.<br><br> <b>Authentication</b><br><br> Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.
  *
  */
-public class UserApiServiceImpl implements UserApi {
+public class UserApiServiceImpl implements UserApiService {
 
 	@Override
 	public User createUser(User body) {
