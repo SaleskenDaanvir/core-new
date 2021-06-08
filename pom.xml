@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.swagger</groupId>
-  <artifactId>swagger-cxf-server</artifactId>
+  <groupId>com.salesken.ai</groupId>
+  <artifactId>organization</artifactId>
   <packaging>war</packaging>
   <name>swagger-cxf-server</name>
   <description>&lt;b&gt;Introduction&lt;/b&gt;&lt;br&gt;&lt;br&gt;This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.&lt;br&gt;&lt;br&gt; &lt;b&gt;Authentication&lt;/b&gt;&lt;br&gt;&lt;br&gt; Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.</description>
