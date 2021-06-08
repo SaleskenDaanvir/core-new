@@ -3,7 +3,7 @@
   <groupId>com.salesken.ai</groupId>
   <artifactId>organization</artifactId>
   <packaging>war</packaging>
-  <name>swagger-cxf-server</name>
+  <name>organization</name>
   <description>&lt;b&gt;Introduction&lt;/b&gt;&lt;br&gt;&lt;br&gt;This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.&lt;br&gt;&lt;br&gt; &lt;b&gt;Authentication&lt;/b&gt;&lt;br&gt;&lt;br&gt; Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.</description>
   <version>1.0.0</version>
   <build>
