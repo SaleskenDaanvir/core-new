@@ -22,7 +22,7 @@ import javax.validation.Valid;
 /**
  * DatatableOrder
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public class DatatableOrder   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public class DatatableOrder   {
   @JsonProperty("column")
   private Integer column = 0;
 

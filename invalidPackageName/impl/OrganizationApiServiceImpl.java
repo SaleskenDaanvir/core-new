@@ -25,7 +25,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public class OrganizationApiServiceImpl extends OrganizationApiService {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public class OrganizationApiServiceImpl extends OrganizationApiService {
     @Override
     public Response createOrganization(List<Organization> body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!

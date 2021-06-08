@@ -23,7 +23,7 @@ import javax.validation.Valid;
 /**
  * DatatableColumn
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public class DatatableColumn   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public class DatatableColumn   {
   @JsonProperty("data")
   private String data = null;
 

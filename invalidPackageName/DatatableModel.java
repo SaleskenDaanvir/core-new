@@ -27,7 +27,7 @@ import javax.validation.Valid;
 /**
  * DatatableModel
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public class DatatableModel   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public class DatatableModel   {
   @JsonProperty("draw")
   private Integer draw = 1;
 

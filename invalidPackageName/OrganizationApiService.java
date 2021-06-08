@@ -25,7 +25,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public abstract class OrganizationApiService {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public abstract class OrganizationApiService {
     public abstract Response createOrganization(List<Organization> body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response getFilteredOrganizations(FilterModel body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response getPaginatedOrganization(DatatableModel body,SecurityContext securityContext) throws NotFoundException;

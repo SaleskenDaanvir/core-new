@@ -24,7 +24,7 @@ import javax.validation.Valid;
 /**
  * InternalServerException
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public class InternalServerException   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public class InternalServerException   {
   @JsonProperty("responseCode")
   private Integer responseCode = null;
 

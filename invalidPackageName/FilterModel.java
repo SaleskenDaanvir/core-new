@@ -25,7 +25,7 @@ import javax.validation.Valid;
 /**
  * FilterModel
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public class FilterModel   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public class FilterModel   {
   @JsonProperty("id")
   private Integer id = null;
 

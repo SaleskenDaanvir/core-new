@@ -24,7 +24,7 @@ import javax.validation.Valid;
 /**
  * AuthTokenInvalidException
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:37.089Z[GMT]")public class AuthTokenInvalidException   {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-06-08T07:59:41.201Z[GMT]")public class AuthTokenInvalidException   {
   @JsonProperty("responseCode")
   private Integer responseCode = null;
 
