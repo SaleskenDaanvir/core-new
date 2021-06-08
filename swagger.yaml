@@ -1,0 +1,946 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Salesken Organization APIs",
+    "description" : "<b>Introduction</b><br><br>This is collection of Organization APIs. These are used to create organization, fetch organization records, update organization and invoke organization.<br><br> <b>Authentication</b><br><br> Salesken Organization APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.",
+    "contact" : {
+      "email" : "itadmin@salesken.ai"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/Salesken8/Organization-DataTable-Test/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://virtserver.swaggerhub.com/Salesken8/Organization/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://beta.salesken.ai/organization/1.0.0",
+    "description" : "Collection of APIs for all operations regarding an organization"
+  } ],
+  "paths" : {
+    "/organization/records" : {
+      "post" : {
+        "tags" : [ "Organization" ],
+        "summary" : "Datatable response for list of organizations.",
+        "description" : "This api will be used to populate paginated  datatable response for the list of organizations.<br><b> | DataTable Model Description - </b> <b><br> <br>1. Draw (Integer) - </b><br> <ul> <li>Draw counter. This is used by DataTables to ensure that the Ajax returns from server-side processing requests are drawn in sequence by DataTables</li> <li>Property is mandatory.</li> <li><b>Examples</b> - 1, 3, 4, 5 etc.</li> </ul> <b><br> 2. Start (Integer) - </b><br> <ul> <li>Paging first record indicator.</li> <li>This is the start point in the current data set (0 index based - i.e. 0 is the first record).</li> <li>Property is mandatory.</li> <li><b>Examples</b> - 0, 1, 2, 4 etc.</li> </ul> <b><br> 3. Length (Integer) - </b><br> <ul> <li>Number of records that the table can display in the current draw.</li> <li>It is expected that the number of records returned will be equal to this number.</li> <li>This property can be -1 to indicate that all records should be returned</li> <li>Property is mandatory.</li> <li><b>Examples</b> - 1, 2, 3, 4 etc.</li> </ul> <b><br> 4. Search (Object) - </b><br> <ul> <b>A. Value (String) - </b> <ul> <li>Global search value. To be applied to all columns which have searchable as true.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>id</li> <li>name</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>name@Org</li> <li>name!</li> </ul> </ul>\n<b>B. Regex (Boolean) - </b> <ul> <li>True if the global filter should be treated as a regular expression for advanced searching, False otherwise.</li> <li>Note that normally server-side processing scripts will not perform regular expression searching for performance reasons on large data sets</li> <li>Property is not mandatory.</li> <li><b>Examples</b> - true, false etc.</li> </ul> </ul> <b><br> 5. Columns (Array) - </b><br> <ul> <b>A. Data (String) - </b> <ul> <li>This property can be used to read and write data to and from any data source property, including deeply nested objects / properties.</li> <li>Data can be given in a number of different ways which affect its behaviour.</li> <li>Property is not mandatory.</li> <li><b>Examples</b> - Abc Organization, Xyz Configuration</li> </ul>\n<b>B. Name (String) - </b> <ul> <li>Column's name</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>id</li> <li>name</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>org@name</li> <li>org@id!</li> </ul> </ul>\n<b>C. Searchable (Boolean) - </b> <ul> <li>Flag to indicate if this column is searchable (true) or not (false).</li> <li><b>Examples</b> - true, false etc.</li> </ul>\n<b>D. Orderable (Boolean) - </b> <ul> <li>Flag to indicate if this column is orderable (true) or not (false).</li> <li><b>Examples</b> - true, false etc.</li> </ul>\n<b>E. Search (Object) - </b> <ul> <li>Already Described Above.</li> </ul> </ul> <b><br>\n6. Order (Array) - </b><br> <ul> <b>A. Column (Integer) - </b> <ul> <li>Column to which ordering should be applied.</li> <li>This is an index reference to the columns array of information that is also submitted to the server.</li> <li><b>Examples</b> - 0, 1, 2, 3 etc.</li> </ul>\n<b>B. Dir (String) - </b> <ul> <li>Ordering direction for this column. It will be asc or desc to indicate ascending ordering or descending ordering, respectively.</li> <li>Property is not mandatory.</li> <li><b>Examples</b> - asc, desc etc.</li> </ul> </ul><b>\n<font size=3><b>Response Time <=300ms</b>",
+        "operationId" : "getPaginatedOrganization",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Datatable.Model"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Organization"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Either Nullability / Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BadRequestException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Auth token not supplied",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenNotSuppliedException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Auth token invalid/Auth token holder is not authorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenInvalidException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InternalServerException"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        }, {
+          "OAuth2" : [ "read" ]
+        } ],
+        "x-swagger-router-controller" : "Organization"
+      }
+    },
+    "/organization/fetch" : {
+      "post" : {
+        "tags" : [ "Organization" ],
+        "summary" : "Get organizations details.",
+        "description" : "This API will take input either orgId or limit and offset and order by columns id and direction and returns the organization details according to filter properties.<br><b> | Filter Model Description - </b> <b><br> <br>1. Id (Integer) - </b><br> <ul> <li>This property is a unique identifier for organization in salesken database.</li> <li>And the Id property should be greater than 0 and less than or equal to integer range (2147483647).</li> <li>If passing Id then no other property need to be passed.</li> <li>Property is not mandatory.</li> <li><b>Examples</b> - 1, 2, 3 etc.</li> </ul> <b><br> 2. Limit (Integer) - </b><br> <ul> <li>Number of records that the table can display in the current draw.</li> <li>It is expected that the number of records returned will be equal to this number.</li> <li>This property can be -1 to indicate that all records should be returned</li> <li>Property is not mandatory.</li> <li>Please refer /organization/create to know limitation of organization name.</li> <li><b>Examples</b> - 1, 2, 3, 100 etc.</li> </ul> <b><br> 2. Offset (Integer) - </b><br> <ul> <li>Paging first record indicator.</li> <li>This is the start point in the current data set (0 index based - i.e. 0 is the first record).</li> <li>Property is not mandatory.</li> <li><b>Examples</b> - 0, 10, 15 etc.</li> </ul> <b><br> 6. Order (Array) - </b><br> <ul> <b>A. Column (Integer) - </b> <ul> <li>Column to which ordering should be applied.</li> <li>This is an index reference to the columns array of information that is also submitted to the server.</li> <li><b>Examples</b> - 0, 1, 2, 3 etc.</li> </ul>\n<b>B. Dir (String) - </b> <ul> <li>Ordering direction for this column. It will be asc or desc to indicate ascending ordering or descending ordering, respectively.</li> <li>Property is not mandatory.</li> <li><b>Examples</b> - asc, desc etc.</li> </ul> </ul><b> <font size=3><b>Response Time <=300ms</b>",
+        "operationId" : "getFilteredOrganizations",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/FilterModel"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Organization"
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Auth token not supplied",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenNotSuppliedException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Auth token invalid/Auth token holder is not authorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenInvalidException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InternalServerException"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        }, {
+          "OAuth2" : [ "read" ]
+        } ],
+        "x-swagger-router-controller" : "Organization"
+      }
+    },
+    "/organization" : {
+      "put" : {
+        "tags" : [ "Organization" ],
+        "summary" : "update existing organization.",
+        "description" : "This API will take an input array as a id, name, website url, description, address and contact details for organization updation and returns the organization details in response.<br><b> | Organization Model Description - </b> <b><br> <br>1. Id (Integer) - </b><br> <ul> <li>This property will define the id for the organization. And it will be unique for an organization</li> <li>ID property should be greater than 0 and less than integer range (2147483647).</li> <li>It should contain a valid organization Id.</li> <li>Property is mandatory.</li> <li><b>Examples</b> - 1, 2, 3 etc.</li> </ul> <b><br> 2. Organisation Name (String) - </b><br> <ul> <li>This property will define the name for the organization.</li> <li>Name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.</li> <li>It should contain a valid organization name.</li> <li>This property should not have any special characters and also should not contain more than one space together. </li> <li>This property should be normalized. e.g. It should not contain any kind of code into it.</li> <li>Property is mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>ABC Organization</li> <li>99 Acres</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>ABC@ Organization</li> <li>Abc987!</li> </ul> </ul> <b><br> 3. Description (String) - </b><br> <ul> <li>This property will define the description for the organization.</li> <li>Description property should contain at least 3 characters and a maximum of 250 characters of letters and digits and also should not contain more than one space together. </li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>This is the discription of ABC Organization</li> <li>99 Acres is India Real Estate Property Site...</li> </ul> </ul> <b><br> 4. Profile (Enum) - </b><br> <ul> <li>This property will define the profile for the organization.</li> <li>Profile enum property can have Software and IT value.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Software</li> <li>IT</li> </ul> </ul> <b><br> 5. Website (String) - </b><br> <ul> <li>This property will define the website URL for the organization.</li> <li>Website property should start with http or https and have a valid URL.</li> <li>Property is mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>https://www.example.com/</li> <li>https://salesken.ai/</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>ftp://example.com/</li> <li>smtp://salesken.com/</li> </ul> </ul> <b><br> 6. Contact Name (String) - </b><br> <ul> <li>This property will define the contactName of the organization. In other words, Point of contact for Salesken.</li> <li>Contact name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.</li> <li>This property should not have any special characters and also should not contain more than one space together.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Abc Xyz</li> <li>Abc 98</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>Abc@98</li> <li>Mr. Xyz</li> </ul> </ul> <b><br> 7. Contact Email (String)  - </b><br> <ul> <li>This property will define the contact email for the organization. In other words, Email of Point of contact for Salesken.</li> <li>Contact email property should contain at least 3 characters and a maximum of 254 characters of letters, digits, underscore, dot, hyphen and At the rate symbol.</li> <li>This property should not have special characters other than the mentioned and also should not contain more than one space together.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>abc@xyz.com</li> <li>xyz@salesken.ai</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>abc@salesken.</li> <li>@abc.com</li> </ul> </ul> <b><br> 8. Contact Phone (String) - </b><br> <ul> <li>This property will define the contact phone number for the organization. In other words, Phone number of Point of contact for Salesken.</li> <li>Contact phone number property should contain at least 4 characters and a maximum of 15 characters of digits.</li> <li>This property should not have any character and any special characters.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>919988776655</li> <li>9988776655</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>+919988776655</li> <li>99887 76655</li> </ul> </ul> <b><br> 9. Address (Object) - </b><br> <ul> <li>This property will define the address for the organization.</li> <li>This has four properties - AddressLine 1, AddressLine 2, Landmark, ZipCodeId</li> <b>A. AddressLine 1 (String) - </b> <ul> <li>This property will define the address line 1 for the Address Object.</li> <li>address line 1 property should contain at least 5 characters and a maximum  of 46 characters of letters, hash, digits, comma, and hyphen.</li> <li>This property should not have special characters other than the mentioned.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>#1, 9 Cross Road Salesken, Bengaluru</li> <li>Leela Palace, Bengaluru</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>@1 -> 9Cross Road!</li> <li>$1 <> 9Cross Road@</li> </ul> </ul>\n<b>B.  AddressLine 2 (String) - </b> <ul> <li>This property will define the address line 2 for the Address Object.</li> <li>Address line 2 property should contain at least 5 characters and a maximum of 46 characters of letters, hash, digits, comma, and hyphen.</li> <li>This property should not have special characters other than the mentioned.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Bengaluru, Karnataka</li> <li>Bengaluru, Karnataka, India</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>@1 Bengaluru!</li> <li>Ben</li> </ul> </ul>\n<b>C. Landmark (String) - </b> <ul> <li>This property will define the landmark for the Address Object.</li> <li>Landmark property should contain  letters, hash, digits, comma, and hyphen.</li> <li>This property should not have special characters other than the mentioned.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Salesken</li> <li>Leela Palace</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>@Salesken</li> <li>Leela -> Palace</li> </ul> </ul>\n<b>D. Pincode (Integer) - </b> <ul> <li>This property will define the pincode for the Address Object.</li> <li>Pincode property should contain at least 2 digits and a maximum  of 10 digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>560007</li> <li>400076</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>1</li> <li>99887766551</li> </ul> </ul>\n<b>E. City (String) - </b> <ul> <li>This property will define the city for the Address Object.</li> <li>City property should contain character and digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Bengaluru</li> <li>Mumbai</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>Mumbai's</li> <li>@Bengaluru</li> </ul> </ul>\n<b>F. State (String) - </b> <ul> <li>This property will define the state for the Address Object.</li> <li>State property should contain character and digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Maharastra</li> <li>Karnataka</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>M@h@r@stra</li> <li>Karnataka'</li> </ul> </ul>\n<b>G. Country (String) - </b> <ul> <li>This property will define the country for the Address Object.</li> <li>Country property should contain character and digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>India</li> <li>China</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>India's</li> <li>China'</li> </ul> </ul> </ul> </ul><b>\n<font size=3><b>Response Time <=300ms</b>",
+        "operationId" : "updateOrganization",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Organization"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Organization"
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InvalidInputException"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Either Nullability / Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BadRequestException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Auth token not supplied",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenNotSuppliedException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Auth token invalid/Auth token holder is not authorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenInvalidException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InternalServerException"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        }, {
+          "OAuth2" : [ "read", "write" ]
+        } ],
+        "x-swagger-router-controller" : "Organization"
+      },
+      "post" : {
+        "tags" : [ "Organization" ],
+        "summary" : "Create a organization.",
+        "description" : "This API will take an input array as a name, website url, description, address and contact details for organization creation and returns the organization details in response.<br><b> | Organization Model Description - </b> <b><br> <br>1. Organisation Name (String) - </b><br> <ul> <li>This property will define the name for the organization.</li> <li>Name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.</li> <li>It should contain a valid organization name.</li> <li>This property should not have any special characters and also should not contain more than one space together. </li> <li>This property should be normalized. e.g. It should not contain any kind of code into it.</li> <li>Property is mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>ABC Organization</li> <li>99 Acres</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>ABC@ Organization</li> <li>Abc987!</li> </ul> </ul> <b><br> 2. Description (String) - </b><br> <ul> <li>This property will define the description for the organization.</li> <li>Description property should contain at least 3 characters and a maximum of 250 characters of letters and digits and also should not contain more than one space together. </li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>This is the discription of ABC Organization</li> <li>99 Acres is India Real Estate Property Site...</li> </ul> </ul> <b><br> 3. Profile (Enum) - </b><br> <ul> <li>This property will define the profile for the organization.</li> <li>Profile enum property can have Software and IT value.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Software</li> <li>IT</li> </ul> </ul> <b><br> 4. Website (String) - </b><br> <ul> <li>This property will define the website URL for the organization.</li> <li>Website property should start with http or https and have a valid URL.</li> <li>Property is mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>https://www.example.com/</li> <li>https://salesken.ai/</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>ftp://example.com/</li> <li>smtp://salesken.com/</li> </ul> </ul> <b><br> 5. Contact Name (String) - </b><br> <ul> <li>This property will define the contactName of the organization. In other words, Point of contact for Salesken.</li> <li>Contact name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.</li> <li>This property should not have any special characters and also should not contain more than one space together.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Abc Xyz</li> <li>Abc 98</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>Abc@98</li> <li>Mr. Xyz</li> </ul> </ul> <b><br> 6. Contact Email (String)  - </b><br> <ul> <li>This property will define the contact email for the organization. In other words, Email of Point of contact for Salesken.</li> <li>Contact email property should contain at least 3 characters and a maximum of 254 characters of letters, digits, underscore, dot, hyphen and At the rate symbol.</li> <li>This property should not have special characters other than the mentioned and also should not contain more than one space together.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>abc@xyz.com</li> <li>xyz@salesken.ai</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>abc@salesken.</li> <li>@abc.com</li> </ul> </ul> <b><br> 7. Contact Phone (String) - </b><br> <ul> <li>This property will define the contact phone number for the organization. In other words, Phone number of Point of contact for Salesken.</li> <li>Contact phone number property should contain at least 4 characters and a maximum of 15 characters of digits.</li> <li>This property should not have any character and any special characters.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>919988776655</li> <li>9988776655</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>+919988776655</li> <li>99887 76655</li> </ul> </ul> <b><br> 8. Address (Object) - </b><br> <ul> <li>This property will define the address for the organization.</li> <li>This has four properties - AddressLine 1, AddressLine 2, Landmark, ZipCodeId</li> <b>A. AddressLine 1 (String) - </b> <ul> <li>This property will define the address line 1 for the Address Object.</li> <li>address line 1 property should contain at least 5 characters and a maximum  of 46 characters of letters, hash, digits, comma, and hyphen.</li> <li>This property should not have special characters other than the mentioned.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>#1, 9 Cross Road Salesken, Bengaluru</li> <li>Leela Palace, Bengaluru</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>@1 -> 9Cross Road!</li> <li>$1 <> 9Cross Road@</li> </ul> </ul>\n<b>B.  AddressLine 2 (String) - </b> <ul> <li>This property will define the address line 2 for the Address Object.</li> <li>Address line 2 property should contain at least 5 characters and a maximum of 46 characters of letters, hash, digits, comma, and hyphen.</li> <li>This property should not have special characters other than the mentioned.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Bengaluru, Karnataka</li> <li>Bengaluru, Karnataka, India</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>@1 Bengaluru!</li> <li>Ben</li> </ul> </ul>\n<b>C. Landmark (String) - </b> <ul> <li>This property will define the landmark for the Address Object.</li> <li>Landmark property should contain  letters, hash, digits, comma, and hyphen.</li> <li>This property should not have special characters other than the mentioned.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Salesken</li> <li>Leela Palace</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>@Salesken</li> <li>Leela -> Palace</li> </ul> </ul>\n<b>D. Pincode (Integer) - </b> <ul> <li>This property will define the pincode for the Address Object.</li> <li>Pincode property should contain at least 2 digits and a maximum  of 10 digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>560007</li> <li>400076</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>1</li> <li>99887766551</li> </ul> </ul>\n<b>E. City (String) - </b> <ul> <li>This property will define the city for the Address Object.</li> <li>City property should contain character and digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Bengaluru</li> <li>Mumbai</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>Mumbai's</li> <li>@Bengaluru</li> </ul> </ul> <b>F. State (String) - </b> <ul> <li>This property will define the state for the Address Object.</li> <li>State property should contain character and digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>Maharastra</li> <li>Karnataka</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>M@h@r@stra</li> <li>Karnataka'</li> </ul> </ul> <b>G. Country (String) - </b> <ul> <li>This property will define the country for the Address Object.</li> <li>Country property should contain character and digits.</li> <li>Property is not mandatory.</li> <li><b>Valid Examples</b></li> <ul> <li>India</li> <li>China</li> </ul> <li><b>Invalid Examples</b></li> <ul> <li>India's</li> <li>China'</li> </ul> </ul> </ul> </ul><b>\n<font size=3><b>Response Time <=300ms</b>",
+        "operationId" : "createOrganization",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/Organization"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Organization"
+                  }
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InvalidInputException"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Either Nullability / Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BadRequestException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Auth token not supplied",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenNotSuppliedException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Auth token invalid/Auth token holder is not authorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenInvalidException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InternalServerException"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        }, {
+          "OAuth2" : [ "read", "write" ]
+        } ],
+        "x-swagger-router-controller" : "Organization"
+      }
+    },
+    "/organization/{organizationId}" : {
+      "delete" : {
+        "tags" : [ "Organization" ],
+        "summary" : "Invoke an existing organization.",
+        "description" : "This API will take input as a organization id for organization deletion and returns the response e.g. (true/false).<br> <b><br> 1. Organization Id (Integer) - </b><br> <ul> <li>This property will define the id for the organization. And it will be unique for an organization</li> <li>ID property should be greater than 0 and less than integer range (2147483647).</li> <li>It should contain a valid organization Id.</li> <li>Property is mandatory.</li> <li><b>Examples</b> - 1, 2, 3 etc.</li> </ul> <b><br> <font size=3><b>Response Time <=300ms</b>",
+        "operationId" : "invokeOrganization",
+        "parameters" : [ {
+          "name" : "organizationId",
+          "in" : "path",
+          "description" : "The organization id that needs to be invoked",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SaleskenResponse"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InvalidInputException"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Either Nullability / Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BadRequestException"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Auth token not supplied",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenNotSuppliedException"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Auth token invalid/Auth token holder is not authorized",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuthTokenInvalidException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InternalServerException"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Organization not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "ApiKeyAuth" : [ ]
+        }, {
+          "OAuth2" : [ "read", "write" ]
+        } ],
+        "x-swagger-router-controller" : "Organization"
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "SaleskenResponse" : {
+        "required" : [ "response", "responseCode", "responseMessage" ],
+        "type" : "object",
+        "properties" : {
+          "responseCode" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "responseMessage" : {
+            "type" : "string",
+            "example" : "Success"
+          },
+          "response" : {
+            "type" : "object"
+          }
+        }
+      },
+      "ErrorType" : {
+        "type" : "string",
+        "enum" : [ "BadRequestError", "UnAuthorizeTokenError", "DBError", "DateParsingError", "TimeParsingError", "AuthTokenNotFound", "InternalServerError", "NotFoundError" ]
+      },
+      "BadRequestErrorType" : {
+        "type" : "string",
+        "enum" : [ "OrgId is invalid", "UserId is Invalid", "OrgName is Invalid", "OrgDescription is Invalid", "OrgProfile is Invalid", "OrgWebsite is Invalid", "OrgContactName is Invalid", "OrgContactEmail is Invalid", "OrgContactPhone is Invalid", "Address Line 1 is Invalid", "Address Line 2 is Invalid", "Landmark is Invalid", "City is Invalid", "State id Invalid", "Country is Invalid" ]
+      },
+      "UnAuthorizeTokenErrorType" : {
+        "type" : "string",
+        "enum" : [ "Auth token invalid for User", "Auth token holder is not authorized" ]
+      },
+      "DBErrorType" : {
+        "type" : "string",
+        "enum" : [ "Dababase connection Failed", "Connection does not exist" ]
+      },
+      "DateParsingErrorType" : {
+        "type" : "string",
+        "enum" : [ "Date is not in parcing format" ]
+      },
+      "TimeParsingErrorType" : {
+        "type" : "string",
+        "enum" : [ "Time is not in parcing format" ]
+      },
+      "InternalServerErrorType" : {
+        "type" : "string",
+        "enum" : [ "Dababase connection Failed", "Connection does not exist" ]
+      },
+      "NotFoundErrorType" : {
+        "type" : "string",
+        "enum" : [ "OrgId not found", "UserId not found", "OrgName not found", "OrgWebsite not found" ]
+      },
+      "AuthTokenNotFound" : {
+        "type" : "string",
+        "enum" : [ "Auth token not supplied for user" ]
+      },
+      "BadRequestException" : {
+        "required" : [ "responseCode", "responseMessage", "responseType" ],
+        "type" : "object",
+        "properties" : {
+          "responseCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 400
+          },
+          "responseMessage" : {
+            "$ref" : "#/components/schemas/BadRequestErrorType"
+          },
+          "responseType" : {
+            "$ref" : "#/components/schemas/ErrorType"
+          }
+        }
+      },
+      "AuthTokenNotSuppliedException" : {
+        "required" : [ "responseCode", "responseMessage", "responseType" ],
+        "type" : "object",
+        "properties" : {
+          "responseCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 401
+          },
+          "responseMessage" : {
+            "$ref" : "#/components/schemas/AuthTokenNotFound"
+          },
+          "responseType" : {
+            "$ref" : "#/components/schemas/ErrorType"
+          }
+        }
+      },
+      "AuthTokenInvalidException" : {
+        "required" : [ "responseCode", "responseMessage", "responseType" ],
+        "type" : "object",
+        "properties" : {
+          "responseCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 403
+          },
+          "responseMessage" : {
+            "$ref" : "#/components/schemas/UnAuthorizeTokenErrorType"
+          },
+          "responseType" : {
+            "$ref" : "#/components/schemas/ErrorType"
+          }
+        }
+      },
+      "InternalServerException" : {
+        "required" : [ "responseCode", "responseMessage", "responseType" ],
+        "type" : "object",
+        "properties" : {
+          "responseCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 500
+          },
+          "responseMessage" : {
+            "$ref" : "#/components/schemas/InternalServerErrorType"
+          },
+          "responseType" : {
+            "$ref" : "#/components/schemas/ErrorType"
+          }
+        }
+      },
+      "InvalidInputException" : {
+        "required" : [ "responseCode", "responseMessage", "responseType" ],
+        "type" : "object",
+        "properties" : {
+          "responseCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 405
+          },
+          "responseMessage" : {
+            "$ref" : "#/components/schemas/BadRequestErrorType"
+          },
+          "responseType" : {
+            "$ref" : "#/components/schemas/ErrorType"
+          }
+        }
+      },
+      "NotFoundException" : {
+        "required" : [ "responseCode", "responseMessage", "responseType" ],
+        "type" : "object",
+        "properties" : {
+          "responseCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 405
+          },
+          "responseMessage" : {
+            "$ref" : "#/components/schemas/NotFoundErrorType"
+          },
+          "responseType" : {
+            "$ref" : "#/components/schemas/ErrorType"
+          }
+        }
+      },
+      "Datatable.Model" : {
+        "required" : [ "draw", "length", "start" ],
+        "type" : "object",
+        "properties" : {
+          "draw" : {
+            "maximum" : 2147483647,
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          },
+          "start" : {
+            "maximum" : 2147483647,
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          },
+          "length" : {
+            "maximum" : 2147483647,
+            "minimum" : -1,
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          },
+          "search" : {
+            "$ref" : "#/components/schemas/Datatable.Search"
+          },
+          "columns" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Datatable.Column"
+            }
+          },
+          "order" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Datatable.Order"
+            }
+          }
+        },
+        "additionalProperties" : false
+      },
+      "Datatable.Order" : {
+        "type" : "object",
+        "properties" : {
+          "column" : {
+            "maximum" : 2147483647,
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 0
+          },
+          "dir" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "additionalProperties" : false
+      },
+      "Datatable.Column" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "searchable" : {
+            "type" : "boolean"
+          },
+          "orderable" : {
+            "type" : "boolean"
+          },
+          "search" : {
+            "$ref" : "#/components/schemas/Datatable.Search"
+          }
+        },
+        "additionalProperties" : false
+      },
+      "Datatable.Search" : {
+        "type" : "object",
+        "properties" : {
+          "value" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "regex" : {
+            "type" : "boolean",
+            "nullable" : true
+          }
+        },
+        "additionalProperties" : false
+      },
+      "Datatable.SearchResults" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "object"
+            }
+          },
+          "draw" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "recordsFiltered" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "recordsTotal" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "additionalProperties" : false
+      },
+      "FilterModel" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "limit" : {
+            "maximum" : 2147483647,
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 1
+          },
+          "offset" : {
+            "maximum" : 2147483647,
+            "minimum" : 0,
+            "type" : "integer",
+            "example" : 0
+          },
+          "order" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Datatable.Order"
+            }
+          }
+        }
+      },
+      "Organization" : {
+        "required" : [ "country", "name", "website", "zipcode" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "maximum" : 46,
+            "minLength" : 3,
+            "pattern" : "^[A-Za-z0-9]*[A-Za-z0-9][A-Za-z0-9]*$",
+            "type" : "string",
+            "example" : "Abc"
+          },
+          "description" : {
+            "maxLength" : 250,
+            "minLength" : 3,
+            "type" : "string",
+            "example" : "This is the description for the Abc organization"
+          },
+          "profile" : {
+            "$ref" : "#/components/schemas/OrganizationProfiles"
+          },
+          "website" : {
+            "pattern" : "^(https?:\\/\\/)?(www.)?[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$",
+            "type" : "string",
+            "example" : "https://www.example.com/"
+          },
+          "contactName" : {
+            "maxLength" : 46,
+            "minLength" : 3,
+            "pattern" : "^[A-Za-z0-9]*[A-Za-z0-9][A-Za-z0-9]*$",
+            "type" : "string",
+            "example" : "Xyz"
+          },
+          "contactEmail" : {
+            "minimum" : 3,
+            "maxLength" : 254,
+            "pattern" : "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",
+            "type" : "string",
+            "example" : "xyz@abc.com"
+          },
+          "contactPhone" : {
+            "maximum" : 15,
+            "minimum" : 4,
+            "type" : "string",
+            "example" : "919999999999"
+          },
+          "address" : {
+            "$ref" : "#/components/schemas/Address"
+          }
+        }
+      },
+      "OrganizationProfiles" : {
+        "type" : "string",
+        "example" : "Software",
+        "enum" : [ "Software", "IT" ]
+      },
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "addressLine1" : {
+            "maximum" : 46,
+            "minimum" : 5,
+            "pattern" : "^[#.0-9a-zA-Z\\s,-]+$",
+            "type" : "string",
+            "example" : "This is address line 1 of the organization."
+          },
+          "addressLine2" : {
+            "maximum" : 46,
+            "minimum" : 5,
+            "pattern" : "^[#.0-9a-zA-Z\\s,-]+$",
+            "type" : "string",
+            "example" : "This is address line 2 of the organization."
+          },
+          "landmark" : {
+            "pattern" : "^[#.0-9a-zA-Z\\s,-]+$",
+            "type" : "string",
+            "example" : "Near XYZ"
+          },
+          "pincode" : {
+            "maximum" : 9999999999,
+            "minimum" : 10,
+            "pattern" : "^[0-9]+$",
+            "type" : "integer",
+            "example" : 560008
+          },
+          "city" : {
+            "pattern" : "^[0-9a-zA-Z]+$",
+            "type" : "string",
+            "example" : "Bengaluru"
+          },
+          "state" : {
+            "pattern" : "^[0-9a-zA-Z]+$",
+            "type" : "string",
+            "example" : "Karnataka"
+          },
+          "country" : {
+            "pattern" : "^[0-9a-zA-Z]+$",
+            "type" : "string",
+            "example" : "India"
+          }
+        }
+      },
+      "OrganizationBilling" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "organziationId" : {
+            "type" : "integer"
+          },
+          "userId" : {
+            "type" : "integer"
+          },
+          "billingCost" : {
+            "type" : "integer"
+          },
+          "billingMonth" : {
+            "type" : "integer"
+          },
+          "overageMinutes" : {
+            "type" : "integer"
+          },
+          "activeUsers" : {
+            "type" : "integer"
+          },
+          "internationalMinutes" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "OrganizationConfiguration" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "organziationId" : {
+            "type" : "integer"
+          },
+          "propertyName" : {
+            "type" : "string"
+          },
+          "propertyValue" : {
+            "type" : "string"
+          },
+          "propertyDataType" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "requestBodies" : {
+      "FilterModel" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/FilterModel"
+            }
+          }
+        }
+      },
+      "Organization" : {
+        "description" : "Organization that needs to be created",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Organization"
+              }
+            }
+          }
+        },
+        "required" : true
+      },
+      "OrganizationConfiguration" : {
+        "description" : "Organization configuration that needs to be created",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/OrganizationConfiguration"
+            }
+          }
+        },
+        "required" : true
+      }
+    },
+    "securitySchemes" : {
+      "ApiKeyAuth" : {
+        "type" : "apiKey",
+        "name" : "X-API-Key",
+        "in" : "header"
+      },
+      "OAuth2" : {
+        "type" : "oauth2",
+        "flows" : {
+          "authorizationCode" : {
+            "authorizationUrl" : "https://example.com/oauth/authorize",
+            "tokenUrl" : "https://example.com/oauth/token",
+            "scopes" : {
+              "read" : "Grants read access",
+              "write" : "Grants write access",
+              "admin" : "Grants access to admin operations"
+            }
+          }
+        }
+      }
+    }
+  }
+}
