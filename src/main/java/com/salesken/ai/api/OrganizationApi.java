@@ -13,6 +13,8 @@ import com.salesken.ai.api.exception.AuthTokenNotSuppliedException;
 import com.salesken.ai.api.exception.InternalServerException;
 import com.salesken.ai.api.exception.InvalidInputException;
 import com.salesken.ai.api.exception.NotFoundException;
+import com.salesken.ai.api.impl.OrganizationApiServiceImpl;
+import com.salesken.ai.api.service.OrganizationApiService;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
 import com.salesken.ai.model.Organization;
@@ -41,8 +43,8 @@ import javax.validation.Valid;
  *
  */
 @Path("/")
-public interface OrganizationApi  {
-
+public class OrganizationApi  {
+	private final OrganizationApiService delegate = new OrganizationApiServiceImpl();
     /**
      * Create a organization.
      *
@@ -61,7 +63,10 @@ public interface OrganizationApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public List<Organization> createOrganization(@Valid List<Organization> body);
+    public List<Organization> createOrganization(@Valid List<Organization> body){
+		return delegate.createOrganization(body);
+    	
+    }
 
     /**
      * Get organizations details.
@@ -79,7 +84,9 @@ public interface OrganizationApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public List<Organization> getFilteredOrganizations(@Valid FilterModel body);
+    public List<Organization> getFilteredOrganizations(@Valid FilterModel body){
+		return delegate.getFilteredOrganizations(body);
+    }
 
     /**
      * Datatable response for list of organizations.
@@ -98,7 +105,9 @@ public interface OrganizationApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public List<Organization> getPaginatedOrganization(@Valid DatatableModel body);
+    public List<Organization> getPaginatedOrganization(@Valid DatatableModel body){
+		return delegate.getPaginatedOrganization(body);
+    }
 
     /**
      * Invoke an existing organization.
@@ -118,7 +127,9 @@ public interface OrganizationApi  {
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))),
         @ApiResponse(responseCode = "404", description = "Organization not found", content = @Content(schema = @Schema(implementation = NotFoundException.class))) })
-    public SaleskenResponse invokeOrganization(@PathParam("organizationId") Long organizationId);
+    public SaleskenResponse invokeOrganization(@PathParam("organizationId") Long organizationId){
+		return delegate.invokeOrganization(organizationId);
+    }
 
     /**
      * update existing organization.
@@ -138,5 +149,7 @@ public interface OrganizationApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public List<Organization> updateOrganization(@Valid List<Organization> body);
+    public List<Organization> updateOrganization(@Valid List<Organization> body){
+		return delegate.updateOrganization(body);
+    }
 }

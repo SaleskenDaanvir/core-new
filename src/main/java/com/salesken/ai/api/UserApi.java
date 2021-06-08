@@ -21,6 +21,10 @@ import com.salesken.ai.api.exception.AuthTokenInvalidException;
 import com.salesken.ai.api.exception.AuthTokenNotSuppliedException;
 import com.salesken.ai.api.exception.InternalServerException;
 import com.salesken.ai.api.exception.InvalidInputException;
+import com.salesken.ai.api.impl.OrganizationApiServiceImpl;
+import com.salesken.ai.api.impl.UserApiServiceImpl;
+import com.salesken.ai.api.service.OrganizationApiService;
+import com.salesken.ai.api.service.UserApiService;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
 import com.salesken.ai.model.SaleskenResponse;
@@ -40,8 +44,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
  *
  */
 @Path("/")
-public interface UserApi  {
-
+public class UserApi  {
+	private final UserApiService delegate = new UserApiServiceImpl();
     /**
      * Create a user.
      *
@@ -60,7 +64,9 @@ public interface UserApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public User createUser(@Valid User body);
+    public User createUser(@Valid User body) {
+    	return delegate.createUser(body);
+    }
 
     /**
      * Delete an existing user.
@@ -80,7 +86,9 @@ public interface UserApi  {
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))),
         @ApiResponse(responseCode = "404", description = "Organization not found", content = @Content(schema = @Schema(implementation = NotFoundException.class))) })
-    public SaleskenResponse deleteUser(@PathParam("userId") Long userId);
+    public SaleskenResponse deleteUser(@PathParam("userId") Long userId){
+    	return delegate.deleteUser(userId);
+    }
 
     /**
      * Get users details.
@@ -98,7 +106,9 @@ public interface UserApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public List<User> getFilteredUsers(@Valid FilterModel body);
+    public List<User> getFilteredUsers(@Valid FilterModel body){
+    	return delegate.getFilteredUsers(body);
+    }
 
     /**
      * Datatable response for list of organizations.
@@ -117,7 +127,9 @@ public interface UserApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public List<User> getPaginatedUsers(@Valid DatatableModel body);
+    public List<User> getPaginatedUsers(@Valid DatatableModel body){
+    	return delegate.getPaginatedUsers(body);
+    }
 
     /**
      * update existing user.
@@ -137,5 +149,7 @@ public interface UserApi  {
         @ApiResponse(responseCode = "401", description = "Auth token not supplied", content = @Content(schema = @Schema(implementation = AuthTokenNotSuppliedException.class))),
         @ApiResponse(responseCode = "403", description = "Auth token invalid/Auth token holder is not authorized", content = @Content(schema = @Schema(implementation = AuthTokenInvalidException.class))),
         @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = InternalServerException.class))) })
-    public User updateUser(@Valid User body);
+    public User updateUser(@Valid User body){
+    	return delegate.updateUser(body);
+    }
 }
