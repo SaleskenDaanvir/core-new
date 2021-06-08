@@ -97,7 +97,7 @@ public class Address   {
    * @return pincode
   **/
   @JsonProperty("pincode")
- @Min(10) @Max(9999999999)  public Integer getPincode() {
+ @Min(10) @Max(9999999999L)  public Integer getPincode() {
     return pincode;
   }
 
