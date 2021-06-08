@@ -9,8 +9,7 @@
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
-                io.swagger.v3.jaxrs2.integration.resources,
-                invalidPackageName
+                com.salesken.ai.api
             </param-value>
         </init-param>
         <init-param>
@@ -33,12 +32,4 @@
         <servlet-name>jersey</servlet-name>
         <url-pattern>/Salesken8/Organization-DataTable-Test/1.0.0/*</url-pattern>
     </servlet-mapping>
-    <filter>
-        <filter-name>ApiOriginFilter</filter-name>
-        <filter-class>invalidPackageName.ApiOriginFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>ApiOriginFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 </web-app>
