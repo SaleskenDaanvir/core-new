@@ -2,6 +2,12 @@ package com.salesken.ai.utils;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
+
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
@@ -45,10 +51,13 @@ public class MongoDBUtils {
 			String password = URLEncoder.encode(DBProperties.getProperty("MONGO_PASS"), StandardCharsets.UTF_8.toString());
 			String dataBase = DBProperties.getProperty("MONGO_DATABASE");
 			String url="mongodb+srv://"+user+":"+password+"@resources.tmkqk.mongodb.net/"+dataBase+"?retryWrites=true&w=majority";
-			
+			System.out.println(url);
 			MongoClientURI connectionString = new MongoClientURI(url);
 			mongoClient = new MongoClient(connectionString);
-		    mongoDB = mongoClient.getDatabase(dataBase);
+			
+			CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
+	                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+		    mongoDB = mongoClient.getDatabase(dataBase).withCodecRegistry(pojoCodecRegistry);
 		} catch (Exception e) {
 
 			e.printStackTrace();
