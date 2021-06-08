@@ -1,9 +1,4 @@
 package salesken.ai.utils;
-import java.beans.PropertyVetoException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
