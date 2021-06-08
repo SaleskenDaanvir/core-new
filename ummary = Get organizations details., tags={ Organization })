@@ -1,0 +1,1332 @@
+[1mdiff --git a/.project b/.project[m
+[1mindex 7e3bdb4..06c7b63 100644[m
+[1m--- a/.project[m
+[1m+++ b/.project[m
+[36m@@ -1,6 +1,6 @@[m
+ <?xml version="1.0" encoding="UTF-8"?>[m
+ <projectDescription>[m
+[31m-	<name>swagger-cxf-server</name>[m
+[32m+[m	[32m<name>Organization</name>[m
+ 	<comment></comment>[m
+ 	<projects>[m
+ 	</projects>[m
+[1mdiff --git a/.settings/org.eclipse.wst.common.component b/.settings/org.eclipse.wst.common.component[m
+[1mindex 854cf68..38588d0 100644[m
+[1m--- a/.settings/org.eclipse.wst.common.component[m
+[1m+++ b/.settings/org.eclipse.wst.common.component[m
+[36m@@ -1,19 +1,34 @@[m
+ <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">[m
+[31m-        [m
+[31m-    <wb-module deploy-name="swagger-cxf-server-1.0.0">[m
+                 [m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+[32m+[m[32m    <wb-module deploy-name="ROOT">[m
+[32m+[m[41m                                [m
+[32m+[m[41m        [m
+[32m+[m[41m        [m
+         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>[m
+[31m-                [m
+[32m+[m[41m                                [m
+[32m+[m[41m        [m
+[32m+[m[41m        [m
+         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>[m
+[31m-                [m
+[32m+[m[41m                                [m
+[32m+[m[41m        [m
+[32m+[m[41m        [m
+         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>[m
+[31m-                [m
+[32m+[m[41m                                [m
+[32m+[m[41m        [m
+[32m+[m[41m        [m
+         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/gen/java"/>[m
+[31m-                [m
+[31m-        <property name="context-root" value="swagger-cxf-server"/>[m
+[31m-                [m
+[32m+[m[41m                                [m
+[32m+[m[41m        [m
+[32m+[m[41m        [m
+         <property name="java-output-path" value="/swagger-cxf-server/target/classes"/>[m
+[31m-            [m
+[31m-    </wb-module>[m
+[32m+[m[32m        <property name="context-root" value="ROOT"/>[m
+[32m+[m[41m                            [m
+[32m+[m[41m    [m
+     [m
+[32m+[m[32m    </wb-module>[m
+[32m+[m[41m            [m
+[32m+[m
+[32m+[m
+ </project-modules>[m
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex 66eb13e..b783936 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -1,220 +1,550 @@[m
+[31m-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">[m
+[31m-  <modelVersion>4.0.0</modelVersion>[m
+[31m-  <groupId>io.swagger</groupId>[m
+[31m-  <artifactId>swagger-cxf-server</artifactId>[m
+[31m-  <packaging>war</packaging>[m
+[31m-  <name>swagger-cxf-server</name>[m
+[31m-  <description>&lt;b&gt;Introduction&lt;/b&gt;&lt;br&gt;&lt;br&gt;This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.&lt;br&gt;&lt;br&gt; &lt;b&gt;Authentication&lt;/b&gt;&lt;br&gt;&lt;br&gt; Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.</description>[m
+[31m-  <version>1.0.0</version>[m
+[31m-  <build>[m
+[31m-    <sourceDirectory>src/main/java</sourceDirectory>[m
+[31m-    <plugins>[m
+[31m-      <plugin>[m
+[31m-        <artifactId>maven-failsafe-plugin</artifactId>[m
+[31m-        <version>2.6</version>[m
+[31m-        <executions>[m
+[31m-          <execution>[m
+[31m-            <goals>[m
+[31m-              <goal>integration-test</goal>[m
+[31m-              <goal>verify</goal>[m
+[31m-            </goals>[m
+[31m-          </execution>[m
+[31m-        </executions>[m
+[31m-      </plugin>[m
+[31m-      <!--plugin>[m
+[31m-        <groupId>org.eclipse.jetty</groupId>[m
+[31m-        <artifactId>jetty-maven-plugin</artifactId>[m
+[31m-        <version>${jetty-version}</version>[m
+[31m-        <configuration>[m
+[31m-          <webApp>[m
+[31m-            <contextPath>/</contextPath>[m
+[31m-          </webApp>[m
+[31m-          <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>[m
+[31m-          <stopPort>8079</stopPort>[m
+[31m-          <stopKey>stopit</stopKey>[m
+[31m-          <httpConnector>[m
+[31m-            <port>8080</port>[m
+[31m-            <idleTimeout>60000</idleTimeout>[m
+[31m-          </httpConnector>[m
+[31m-        </configuration>[m
+[31m-        <dependencies>[m
+[31m-          <dependency>[m
+[31m-              <groupId>javax.validation</groupId>[m
+[31m-              <artifactId>validation-api</artifactId>[m
+[31m-              <version>${beanvalidation-version}</version>[m
+[31m-          </dependency>[m
+[31m-        </dependencies>[m
+[31m-        <executions>[m
+[31m-          <execution>[m
+[31m-            <id>start-jetty</id>[m
+[31m-            <phase>pre-integration-test</phase>[m
+[31m-            <goals>[m
+[31m-              <goal>start</goal>[m
+[31m-            </goals>[m
+[31m-            <configuration>[m
+[31m-              <scanIntervalSeconds>0</scanIntervalSeconds>[m
+[31m-              <daemon>true</daemon>[m
+[31m-            </configuration>[m
+[31m-          </execution>[m
+[31m-          <execution>[m
+[31m-            <id>stop-jetty</id>[m
+[31m-            <phase>post-integration-test</phase>[m
+[31m-            <goals>[m
+[31m-              <goal>stop</goal>[m
+[31m-            </goals>[m
+[31m-          </execution>[m
+[31m-        </executions>[m
+[31m-      </plugin-->[m
+[31m-      <plugin>[m
+[31m-        <groupId>org.codehaus.mojo</groupId>[m
+[31m-        <artifactId>build-helper-maven-plugin</artifactId>[m
+[31m-        <version>1.9.1</version>[m
+[31m-        <executions>[m
+[31m-          <execution>[m
+[31m-            <id>add-source</id>[m
+[31m-            <phase>generate-sources</phase>[m
+[31m-            <goals>[m
+[31m-              <goal>add-source</goal>[m
+[31m-            </goals>[m
+[31m-            <configuration>[m
+[31m-              <sources>[m
+[31m-                <source>src/gen/java</source>[m
+[31m-              </sources>[m
+[31m-            </configuration>[m
+[31m-          </execution>[m
+[31m-        </executions>[m
+[31m-      </plugin>[m
+[31m-      [m
+[31m-      <!-- build WAR file -->[m
+[31m-      <plugin>[m
+[31m-        <artifactId>maven-war-plugin</artifactId>[m
+[31m-        <version>3.1.0</version>[m
+[31m-        <configuration>[m
+[31m-           <failOnMissingWebXml>false</failOnMissingWebXml>[m
+[31m-        </configuration>[m
+[31m-    </plugin>[m
+[31m-    </plugins>[m
+[31m-  </build>[m
+[31m-  <dependencies>[m
+[31m-    <dependency>[m
+[31m-      <groupId>io.swagger.core.v3</groupId>[m
+[31m-      <artifactId>swagger-jaxrs2</artifactId>[m
+[31m-      <scope>compile</scope>[m
+[31m-      <version>${swagger-core-version}</version>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-      <groupId>ch.qos.logback</groupId>[m
+[31m-      <artifactId>logback-classic</artifactId>[m
+[31m-      <version>${logback-version}</version>[m
+[31m-      <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-      <groupId>ch.qos.logback</groupId>[m
+[31m-      <artifactId>logback-core</artifactId>[m
+[31m-      <version>${logback-version}</version>[m
+[31m-      <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-      <groupId>junit</groupId>[m
+[31m-      <artifactId>junit</artifactId>[m
+[31m-      <version>${junit-version}</version>[m
+[31m-      <scope>test</scope>[m
+[31m-    </dependency>[m
+[31m-    <!-- Bean Validation API support -->[m
+[31m-    <dependency>[m
+[31m-        <groupId>javax.validation</groupId>[m
+[31m-        <artifactId>validation-api</artifactId>[m
+[31m-        <version>${beanvalidation-version}</version>[m
+[31m-        <scope>provided</scope>[m
+[31m-    </dependency>[m
+[31m-    <!-- CXF Client -->[m
+[31m-    <dependency>[m
+[31m-        <groupId>org.apache.cxf</groupId>[m
+[31m-        <artifactId>cxf-rt-rs-client</artifactId>[m
+[31m-        <version>${cxf-version}</version>[m
+[31m-        <scope>test</scope>[m
+[31m-    </dependency>[m
+[31m-    [m
+[31m-     <!-- CXF server -->[m
+[31m-    <dependency>[m
+[31m-        <groupId>org.apache.cxf</groupId>[m
+[31m-        <artifactId>cxf-rt-frontend-jaxrs</artifactId>[m
+[31m-        <version>${cxf-version}</version>[m
+[31m-        <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-        <groupId>org.apache.cxf</groupId>[m
+[31m-        <artifactId>cxf-rt-rs-service-description</artifactId>[m
+[31m-        <version>${cxf-version}</version>[m
+[31m-        <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-        <groupId>org.apache.cxf</groupId>[m
+[31m-        <artifactId>cxf-rt-rs-service-description-openapi-v3</artifactId>[m
+[31m-        <version>${cxf-version}</version>[m
+[31m-        <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-        <groupId>org.apache.cxf</groupId>[m
+[31m-        <artifactId>cxf-rt-ws-policy</artifactId>[m
+[31m-        <version>${cxf-version}</version>[m
+[31m-        <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-        <groupId>org.apache.cxf</groupId>[m
+[31m-        <artifactId>cxf-rt-wsdl</artifactId>[m
+[31m-        <version>${cxf-version}</version>[m
+[31m-        <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-        <groupId>com.fasterxml.jackson.jaxrs</groupId>[m
+[31m-        <artifactId>jackson-jaxrs-json-provider</artifactId>[m
+[31m-        <version>${jackson-jaxrs-version}</version>[m
+[31m-        <scope>compile</scope>[m
+[31m-    </dependency>[m
+[31m-    <dependency>[m
+[31m-        <groupId>com.fasterxml.jackson.datatype</groupId>[m
+[31m-        <artifactId>jackson-datatype-joda</artifactId>[m
+[31m-        <version>${jackson-jaxrs-version}</version>[m
+[31m-    </dependency>[m
+[31m-      <dependency>[m
+[31m-          <groupId>javax.xml.bind</groupId>[m
+[31m-          <artifactId>jaxb-api</artifactId>[m
+[31m-          <version>2.2.6</version>[m
+[31m-      </dependency>[m
+[31m-      <dependency>[m
+[31m-          <groupId>javax.activation</groupId>[m
+[31m-          <artifactId>activation</artifactId>[m
+[31m-          <version>1.1.1</version>[m
+[31m-      </dependency>[m
+[31m-      <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->[m
+[31m-<dependency>[m
+[31m-    <groupId>org.mongodb</groupId>[m
+[31m-    <artifactId>mongo-java-driver</artifactId>[m
+[31m-    <version>3.12.8</version>[m
+[31m-</dependency>[m
+[31m-  </dependencies>[m
+[31m-  <repositories>[m
+[31m-    <repository>[m
+[31m-      <id>sonatype-snapshots</id>[m
+[31m-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>[m
+[31m-      <snapshots>[m
+[31m-        <enabled>true</enabled>[m
+[31m-      </snapshots>[m
+[31m-    </repository>[m
+[31m-  </repositories>[m
+[31m-  <properties>[m
+[31m-    <java.version>1.8</java.version>[m
+[31m-    <maven.compiler.source>${java.version}</maven.compiler.source>[m
+[31m-    <maven.compiler.target>${java.version}</maven.compiler.target>[m
+[31m-    <swagger-core-version>2.0.0</swagger-core-version>[m
+[31m-    <jetty-version>9.2.9.v20150224</jetty-version>[m
+[31m-    <junit-version>4.13.1</junit-version>[m
+[31m-    <logback-version>1.1.7</logback-version>[m
+[31m-    <servlet-api-version>2.5</servlet-api-version>[m
+[31m-    <beanvalidation-version>1.1.0.Final</beanvalidation-version>[m
+[31m-    <cxf-version>3.2.4</cxf-version>[m
+[31m-    <jackson-jaxrs-version>2.9.1</jackson-jaxrs-version>[m
+[31m-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>[m
+[31m-  </properties>[m
+[32m+[m[32m<project xmlns="http://maven.apache.org/POM/4.0.0"[m
+[32m+[m	[32mxmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"[m
+[32m+[m	[32mxsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">[m
+[32m+[m	[32m<modelVersion>4.0.0</modelVersion>[m
+[32m+[m	[32m<groupId>com.salesken.ai</groupId>[m
+[32m+[m	[32m<artifactId>organization</artifactId>[m
+[32m+[m	[32m<packaging>war</packaging>[m
+[32m+[m	[32m<name>organization</name>[m
+[32m+[m	[32m<description>&lt;b&gt;Introduction&lt;/b&gt;&lt;br&gt;&lt;br&gt;This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.&lt;br&gt;&lt;br&gt; &lt;b&gt;Authentication&lt;/b&gt;&lt;br&gt;&lt;br&gt; Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.</description>[m
+[32m+[m	[32m<version>1.0.0</version>[m
+[32m+[m	[32m<properties>[m
+[32m+[m		[32m<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>[m
+[32m+[m		[32m<maven.compiler.source>1.8</maven.compiler.source>[m
+[32m+[m		[32m<maven.compiler.target>1.8</maven.compiler.target>[m
+[32m+[m		[32m<jersey.version>2.28</jersey.version>[m
+[32m+[m		[32m<swagger-core-version>2.0.0</swagger-core-version>[m
+[32m+[m
+[32m+[m	[32m</properties>[m
+[32m+[m	[32m<repositories>[m
+[32m+[m		[32m<repository>[m
+[32m+[m			[32m<id>jcenter</id>[m
+[32m+[m			[32m<url>https://jcenter.bintray.com/</url>[m
+[32m+[m		[32m</repository>[m
+[32m+[m	[32m</repositories>[m
+[32m+[m	[32m<dependencyManagement>[m
+[32m+[m		[32m<dependencies>[m
+[32m+[m			[32m<dependency>[m
+[32m+[m				[32m<groupId>org.glassfish.jersey</groupId>[m
+[32m+[m				[32m<artifactId>jersey-bom</artifactId>[m
+[32m+[m				[32m<version>${jersey.version}</version>[m
+[32m+[m				[32m<type>pom</type>[m
+[32m+[m				[32m<scope>import</scope>[m
+[32m+[m			[32m</dependency>[m
+[32m+[m			[32m<dependency>[m
+[32m+[m				[32m<groupId>com.google.cloud</groupId>[m
+[32m+[m				[32m<artifactId>libraries-bom</artifactId>[m
+[32m+[m				[32m<version>3.0.0</version>[m
+[32m+[m				[32m<type>pom</type>[m
+[32m+[m				[32m<scope>import</scope>[m
+[32m+[m			[32m</dependency>[m
+[32m+[m		[32m</dependencies>[m
+[32m+[m	[32m</dependencyManagement>[m
+[32m+[m
+[32m+[m	[32m<dependencies>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.ringcentral/ringcentral -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.ringcentral</groupId>[m
+[32m+[m			[32m<artifactId>ringcentral</artifactId>[m
+[32m+[m			[32m<version>0.6.4</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.swagger.core.v3</groupId>[m
+[32m+[m			[32m<artifactId>swagger-jaxrs2</artifactId>[m
+[32m+[m			[32m<scope>compile</scope>[m
+[32m+[m			[32m<version>${swagger-core-version}</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.github.javafaker</groupId>[m
+[32m+[m			[32m<artifactId>javafaker</artifactId>[m
+[32m+[m			[32m<version>0.16</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.mongodb</groupId>[m
+[32m+[m			[32m<artifactId>mongo-java-driver</artifactId>[m
+[32m+[m			[32m<version>3.12.8</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.google.code.gson</groupId>[m
+[32m+[m			[32m<artifactId>gson</artifactId>[m
+[32m+[m			[32m<version>2.8.5</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.zaxxer</groupId>[m
+[32m+[m			[32m<artifactId>HikariCP</artifactId>[m
+[32m+[m			[32m<version>3.2.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.postgresql</groupId>[m
+[32m+[m			[32m<artifactId>postgresql</artifactId>[m
+[32m+[m			[32m<version>42.2.5</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- JJWT -->[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.jsonwebtoken</groupId>[m
+[32m+[m			[32m<artifactId>jjwt-api</artifactId>[m
+[32m+[m			[32m<version>0.10.7</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.jsonwebtoken</groupId>[m
+[32m+[m			[32m<artifactId>jjwt-impl</artifactId>[m
+[32m+[m			[32m<version>0.10.7</version>[m
+[32m+[m			[32m<scope>runtime</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.jsonwebtoken</groupId>[m
+[32m+[m			[32m<artifactId>jjwt-jackson</artifactId>[m
+[32m+[m			[32m<version>0.10.7</version>[m
+[32m+[m			[32m<scope>runtime</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.json/json -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.json</groupId>[m
+[32m+[m			[32m<artifactId>json</artifactId>[m
+[32m+[m			[32m<version>20190722</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.twilio.sdk</groupId>[m
+[32m+[m			[32m<artifactId>twilio-java-sdk</artifactId>[m
+[32m+[m			[32m<version>(6.0,6.9)</version>[m
+[32m+[m			[32m<exclusions>[m
+[32m+[m				[32m<exclusion>[m
+[32m+[m					[32m<groupId>io.jsonwebtoken</groupId>[m
+[32m+[m					[32m<artifactId>jjwt</artifactId>[m
+[32m+[m				[32m</exclusion>[m
+[32m+[m			[32m</exclusions>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.twilio.sdk</groupId>[m
+[32m+[m			[32m<artifactId>twilio</artifactId>[m
+[32m+[m			[32m<version>7.50.0</version>[m
+[32m+[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.maxmind.geoip2/geoip2 -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.maxmind.geoip2</groupId>[m
+[32m+[m			[32m<artifactId>geoip2</artifactId>[m
+[32m+[m			[32m<version>2.12.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.mchange</groupId>[m
+[32m+[m			[32m<artifactId>c3p0</artifactId>[m
+[32m+[m			[32m<version>0.9.5.2</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.websocket</groupId>[m
+[32m+[m			[32m<artifactId>javax.websocket-api</artifactId>[m
+[32m+[m			[32m<version>1.1</version>[m
+[32m+[m			[32m<scope>provided</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.json/json -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.json</groupId>[m
+[32m+[m			[32m<artifactId>json</artifactId>[m
+[32m+[m			[32m<version>20180813</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.httpcomponents</groupId>[m
+[32m+[m			[32m<artifactId>httpclient</artifactId>[m
+[32m+[m			[32m<version>4.5.6</version>[m
+[32m+[m		[32m</dependency><!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.httpcomponents</groupId>[m
+[32m+[m			[32m<artifactId>httpmime</artifactId>[m
+[32m+[m			[32m<version>4.5.6</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.httpcomponents</groupId>[m
+[32m+[m			[32m<artifactId>httpcore</artifactId>[m
+[32m+[m			[32m<version>4.4.10</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- Similarity -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>junit</groupId>[m
+[32m+[m			[32m<artifactId>junit</artifactId>[m
+[32m+[m			[32m<version>4.0</version>[m
+[32m+[m			[32m<scope>compile</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.poi</groupId>[m
+[32m+[m			[32m<artifactId>poi</artifactId>[m
+[32m+[m			[32m<version>4.0.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.poi</groupId>[m
+[32m+[m			[32m<artifactId>poi-scratchpad</artifactId>[m
+[32m+[m			[32m<version>4.0.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.poi</groupId>[m
+[32m+[m			[32m<artifactId>poi-ooxml</artifactId>[m
+[32m+[m			[32m<version>4.0.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>commons-fileupload</groupId>[m
+[32m+[m			[32m<artifactId>commons-fileupload</artifactId>[m
+[32m+[m			[32m<version>1.2.2</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>commons-io</groupId>[m
+[32m+[m			[32m<artifactId>commons-io</artifactId>[m
+[32m+[m			[32m<version>2.4</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.ocpsoft.prettytime</groupId>[m
+[32m+[m			[32m<artifactId>prettytime</artifactId>[m
+[32m+[m			[32m<version>4.0.1.Final</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.servlet</groupId>[m
+[32m+[m			[32m<artifactId>javax.servlet-api</artifactId>[m
+[32m+[m			[32m<version>4.0.1</version>[m
+[32m+[m			[32m<scope>provided</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.google.cloud</groupId>[m
+[32m+[m			[32m<artifactId>google-cloud-speech</artifactId>[m
+[32m+[m			[32m<version>0.77.0-beta</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.google.cloud</groupId>[m
+[32m+[m			[32m<artifactId>google-cloud-storage</artifactId>[m
+[32m+[m			[32m<version>1.59.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.google.guava</groupId>[m
+[32m+[m			[32m<artifactId>guava</artifactId>[m
+[32m+[m			[32m<version>27.0.1-jre</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.ibm.watson.developer_cloud/tone-analyzer -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.ibm.watson.developer_cloud</groupId>[m
+[32m+[m			[32m<artifactId>tone-analyzer</artifactId>[m
+[32m+[m			[32m<version>6.11.3</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jsoup</groupId>[m
+[32m+[m			[32m<artifactId>jsoup</artifactId>[m
+[32m+[m			[32m<version>1.11.3</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-translate -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.google.cloud</groupId>[m
+[32m+[m			[32m<artifactId>google-cloud-translate</artifactId>[m
+[32m+[m			[32m<version>1.61.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/javax.mail/mail -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.mail</groupId>[m
+[32m+[m			[32m<artifactId>mail</artifactId>[m
+[32m+[m			[32m<version>1.5.0-b01</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- jnosql specific enteries -->[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jnosql.diana</groupId>[m
+[32m+[m			[32m<artifactId>diana-column</artifactId>[m
+[32m+[m			[32m<version>0.0.8</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jnosql.diana</groupId>[m
+[32m+[m			[32m<artifactId>diana-document</artifactId>[m
+[32m+[m			[32m<version>0.0.8</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jnosql.diana</groupId>[m
+[32m+[m			[32m<artifactId>diana-key-value</artifactId>[m
+[32m+[m			[32m<version>0.0.8</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jnosql.artemis</groupId>[m
+[32m+[m			[32m<artifactId>artemis-column</artifactId>[m
+[32m+[m			[32m<version>0.0.8</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jnosql.artemis</groupId>[m
+[32m+[m			[32m<artifactId>artemis-document</artifactId>[m
+[32m+[m			[32m<version>0.0.8</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.jnosql.artemis</groupId>[m
+[32m+[m			[32m<artifactId>artemis-key-value</artifactId>[m
+[32m+[m			[32m<version>0.0.8</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.enterprise</groupId>[m
+[32m+[m			[32m<artifactId>cdi-api</artifactId>[m
+[32m+[m			[32m<version>2.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.google.firebase</groupId>[m
+[32m+[m			[32m<artifactId>firebase-admin</artifactId>[m
+[32m+[m			[32m<version>6.7.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.paralleldots/paralleldots -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.paralleldots</groupId>[m
+[32m+[m			[32m<artifactId>paralleldots</artifactId>[m
+[32m+[m			[32m<version>1.0.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.googlecode.json-simple</groupId>[m
+[32m+[m			[32m<artifactId>json-simple</artifactId>[m
+[32m+[m			[32m<version>1.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.squareup.okhttp3</groupId>[m
+[32m+[m			[32m<artifactId>okhttp</artifactId>[m
+[32m+[m			[32m<version>3.13.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.squareup.okio/okio -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.squareup.okio</groupId>[m
+[32m+[m			[32m<artifactId>okio</artifactId>[m
+[32m+[m			[32m<version>2.2.2</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.pdfbox</groupId>[m
+[32m+[m			[32m<artifactId>pdfbox</artifactId>[m
+[32m+[m			[32m<version>2.0.14</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/fontbox -->[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-tools -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.pdfbox</groupId>[m
+[32m+[m			[32m<artifactId>pdfbox-tools</artifactId>[m
+[32m+[m			[32m<version>2.0.14</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.github.dhorions/boxable -->[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.itextpdf</groupId>[m
+[32m+[m			[32m<artifactId>itextpdf</artifactId>[m
+[32m+[m			[32m<version>5.5.13</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.servlet</groupId>[m
+[32m+[m			[32m<artifactId>jstl</artifactId>[m
+[32m+[m			[32m<version>1.2</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m
+[32m+[m		[32m<!-- Jersey -->[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.jersey.containers</groupId>[m
+[32m+[m			[32m<artifactId>jersey-container-servlet-core</artifactId>[m
+[32m+[m			[32m<!-- use the following artifactId if you don't need servlet 2.x compatibility -->[m
+[32m+[m			[32m<!-- artifactId>jersey-container-servlet</artifactId -->[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.jersey.inject</groupId>[m
+[32m+[m			[32m<artifactId>jersey-hk2</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.jersey.media</groupId>[m
+[32m+[m			[32m<artifactId>jersey-media-json-binding</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- Swagger -->[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.swagger</groupId>[m
+[32m+[m			[32m<artifactId>swagger-annotations</artifactId>[m
+[32m+[m			[32m<version>1.5.20</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/io.swagger/swagger-jaxrs -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.swagger</groupId>[m
+[32m+[m			[32m<artifactId>swagger-jaxrs</artifactId>[m
+[32m+[m			[32m<version>1.5.20</version>[m
+[32m+[m			[32m<exclusions>[m
+[32m+[m				[32m<exclusion>[m
+[32m+[m					[32m<groupId>javax.ws.rs</groupId>[m
+[32m+[m					[32m<artifactId>jsr311-api</artifactId>[m
+[32m+[m				[32m</exclusion>[m
+[32m+[m			[32m</exclusions>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/io.swagger/swagger-core -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.swagger</groupId>[m
+[32m+[m			[32m<artifactId>swagger-core</artifactId>[m
+[32m+[m			[32m<version>1.5.20</version>[m
+[32m+[m			[32m<exclusions>[m
+[32m+[m				[32m<exclusion>[m
+[32m+[m					[32m<groupId>javax.ws.rs</groupId>[m
+[32m+[m					[32m<artifactId>jsr311-api</artifactId>[m
+[32m+[m				[32m</exclusion>[m
+[32m+[m			[32m</exclusions>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/io.swagger/swagger-models -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>io.swagger</groupId>[m
+[32m+[m			[32m<artifactId>swagger-models</artifactId>[m
+[32m+[m			[32m<version>1.5.20</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!--Swagger End here -->[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/javax.activation/activation -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.activation</groupId>[m
+[32m+[m			[32m<artifactId>activation</artifactId>[m
+[32m+[m			[32m<version>1.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.xml.bind</groupId>[m
+[32m+[m			[32m<artifactId>jaxb-api</artifactId>[m
+[32m+[m			[32m<version>2.3.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.jaxb</groupId>[m
+[32m+[m			[32m<artifactId>jaxb-runtime</artifactId>[m
+[32m+[m			[32m<version>2.3.2</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.onelogin</groupId>[m
+[32m+[m			[32m<artifactId>java-saml</artifactId>[m
+[32m+[m			[32m<version>2.6.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.apache.solr</groupId>[m
+[32m+[m			[32m<artifactId>solr-solrj</artifactId>[m
+[32m+[m			[32m<version>7.1.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.googlecode.libphonenumber</groupId>[m
+[32m+[m			[32m<artifactId>libphonenumber</artifactId>[m
+[32m+[m			[32m<version>8.10.20</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.websocket</groupId>[m
+[32m+[m			[32m<artifactId>javax.websocket-client-api</artifactId>[m
+[32m+[m			[32m<version>1.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.tyrus</groupId>[m
+[32m+[m			[32m<artifactId>tyrus-client</artifactId>[m
+[32m+[m			[32m<version>1.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.tyrus</groupId>[m
+[32m+[m			[32m<artifactId>tyrus-container-grizzly</artifactId>[m
+[32m+[m			[32m<version>1.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>javax.json</groupId>[m
+[32m+[m			[32m<artifactId>javax.json-api</artifactId>[m
+[32m+[m			[32m<version>1.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish</groupId>[m
+[32m+[m			[32m<artifactId>javax.json</artifactId>[m
+[32m+[m			[32m<version>1.0.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.httpunit/httpunit -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.httpunit</groupId>[m
+[32m+[m			[32m<artifactId>httpunit</artifactId>[m
+[32m+[m			[32m<version>1.7.3</version>[m
+[32m+[m			[32m<scope>test</scope>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>net.sf.jazzy</groupId>[m
+[32m+[m			[32m<artifactId>jazzy</artifactId>[m
+[32m+[m			[32m<version>0.5.2-rtext-1.4.1-2</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-multipart -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.jersey.media</groupId>[m
+[32m+[m			[32m<artifactId>jersey-media-multipart</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-common -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.glassfish.jersey.core</groupId>[m
+[32m+[m			[32m<artifactId>jersey-common</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>ch.qos.logback</groupId>[m
+[32m+[m			[32m<artifactId>logback-classic</artifactId>[m
+[32m+[m			[32m<version>1.3.0-alpha5</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.slf4j</groupId>[m
+[32m+[m			[32m<artifactId>slf4j-api</artifactId>[m
+[32m+[m			[32m<version>2.0.0-alpha1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.slf4j</groupId>[m
+[32m+[m			[32m<artifactId>slf4j-simple</artifactId>[m
+[32m+[m			[32m<version>2.0.0-alpha1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.passay</groupId>[m
+[32m+[m			[32m<artifactId>passay</artifactId>[m
+[32m+[m			[32m<version>1.6.0</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.sendgrid</groupId>[m
+[32m+[m			[32m<artifactId>sendgrid-java</artifactId>[m
+[32m+[m			[32m<version>4.0.1</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>com.google.cloud</groupId>[m
+[32m+[m			[32m<artifactId>google-cloud-pubsub</artifactId>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m		[32m<!-- https://mvnrepository.com/artifact/tangrammer/java-net-http-client -->[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>tangrammer</groupId>[m
+[32m+[m			[32m<artifactId>java-net-http-client</artifactId>[m
+[32m+[m			[32m<version>0.1.2</version>[m
+[32m+[m		[32m</dependency>[m
+[32m+[m
+[32m+[m	[32m</dependencies>[m
+[32m+[m
+[32m+[m
+[32m+[m	[32m<build>[m
+[32m+[m		[32m<finalName>ROOT</finalName>[m
+[32m+[m	[32m</build>[m
+ </project>[m
+[1mdiff --git a/src/main/java/com/salesken/ai/api/OrganizationApi.java b/src/main/java/com/salesken/ai/api/OrganizationApi.java[m
+[1mindex 7678f08..d06428d 100644[m
+[1m--- a/src/main/java/com/salesken/ai/api/OrganizationApi.java[m
+[1m+++ b/src/main/java/com/salesken/ai/api/OrganizationApi.java[m
+[36m@@ -6,15 +6,13 @@[m [mimport java.io.InputStream;[m
+ import java.io.OutputStream;[m
+ import java.util.List;[m
+ import java.util.Map;[m
+[31m-import javax.ws.rs.*;[m
+[31m-import javax.ws.rs.core.Response;[m
+[31m-import javax.ws.rs.core.MediaType;[m
+[31m-import org.apache.cxf.jaxrs.ext.multipart.*;[m
+ [m
+[32m+[m[32mimport com.ibm.watson.developer_cloud.service.exception.BadRequestException;[m
+ import com.salesken.ai.api.exception.AuthTokenInvalidException;[m
+ import com.salesken.ai.api.exception.AuthTokenNotSuppliedException;[m
+ import com.salesken.ai.api.exception.InternalServerException;[m
+ import com.salesken.ai.api.exception.InvalidInputException;[m
+[32m+[m[32mimport com.salesken.ai.api.exception.NotFoundException;[m
+ import com.salesken.ai.model.DatatableModel;[m
+ import com.salesken.ai.model.FilterModel;[m
+ import com.salesken.ai.model.Organization;[m
+[36m@@ -27,6 +25,13 @@[m [mimport io.swagger.v3.oas.annotations.media.ArraySchema;[m
+ import io.swagger.v3.oas.annotations.media.Content;[m
+ import io.swagger.v3.oas.annotations.media.Schema;[m
+ import javax.validation.constraints.*;[m
+[32m+[m[32mimport javax.ws.rs.Consumes;[m
+[32m+[m[32mimport javax.ws.rs.DELETE;[m
+[32m+[m[32mimport javax.ws.rs.POST;[m
+[32m+[m[32mimport javax.ws.rs.PUT;[m
+[32m+[m[32mimport javax.ws.rs.Path;[m
+[32m+[m[32mimport javax.ws.rs.PathParam;[m
+[32m+[m[32mimport javax.ws.rs.Produces;[m
+ import javax.validation.Valid;[m
+ [m
+ /**[m
+[1mdiff --git a/src/main/java/com/salesken/ai/model/DatatableOrder.java b/src/main/java/com/salesken/ai/model/DatatableOrder.java[m
+[1mindex f3f489a..a766ae7 100644[m
+[1m--- a/src/main/java/com/salesken/ai/model/DatatableOrder.java[m
+[1m+++ b/src/main/java/com/salesken/ai/model/DatatableOrder.java[m
+[36m@@ -3,13 +3,6 @@[m [mpackage com.salesken.ai.model;[m
+ import javax.validation.constraints.*;[m
+ [m
+ import io.swagger.v3.oas.annotations.media.Schema;[m
+[31m-import javax.xml.bind.annotation.XmlElement;[m
+[31m-import javax.xml.bind.annotation.XmlRootElement;[m
+[31m-import javax.xml.bind.annotation.XmlAccessType;[m
+[31m-import javax.xml.bind.annotation.XmlAccessorType;[m
+[31m-import javax.xml.bind.annotation.XmlType;[m
+[31m-import javax.xml.bind.annotation.XmlEnum;[m
+[31m-import javax.xml.bind.annotation.XmlEnumValue;[m
+ import com.fasterxml.jackson.annotation.JsonProperty;[m
+ import com.fasterxml.jackson.annotation.JsonValue;[m
+ import com.fasterxml.jackson.annotation.JsonCreator;[m
+[1mdiff --git a/src/main/java/com/salesken/ai/model/SaleskenResponse.java b/src/main/java/com/salesken/ai/model/SaleskenResponse.java[m
+[1mindex b098fa6..d6a0e1d 100644[m
+[1m--- a/src/main/java/com/salesken/ai/model/SaleskenResponse.java[m
+[1m+++ b/src/main/java/com/salesken/ai/model/SaleskenResponse.java[m
+[36m@@ -1,18 +1,10 @@[m
+ package com.salesken.ai.model;[m
+ [m
+[31m-import javax.validation.constraints.*;[m
+[32m+[m[32mimport javax.validation.constraints.NotNull;[m
+ [m
+[31m-import io.swagger.v3.oas.annotations.media.Schema;[m
+[31m-import javax.xml.bind.annotation.XmlElement;[m
+[31m-import javax.xml.bind.annotation.XmlRootElement;[m
+[31m-import javax.xml.bind.annotation.XmlAccessType;[m
+[31m-import javax.xml.bind.annotation.XmlAccessorType;[m
+[31m-import javax.xml.bind.annotation.XmlType;[m
+[31m-import javax.xml.bind.annotation.XmlEnum;[m
+[31m-import javax.xml.bind.annotation.XmlEnumValue;[m
+ import com.fasterxml.jackson.annotation.JsonProperty;[m
+[31m-import com.fasterxml.jackson.annotation.JsonValue;[m
+[31m-import com.fasterxml.jackson.annotation.JsonCreator;[m
+[32m+[m
+[32m+[m[32mimport io.swagger.v3.oas.annotations.media.Schema;[m
+ [m
+ public class SaleskenResponse   {[m
+   [m
+[1mdiff --git a/src/main/java/db.properties b/src/main/java/db.properties[m
+[1mindex 7e42def..87bb8c7 100644[m
+[1m--- a/src/main/java/db.properties[m
+[1m+++ b/src/main/java/db.properties[m
+[36m@@ -1,3 +1,2 @@[m
+[31m-MONGO_USER=dbuser[m
+[31m-MONGO_PASS=Password@123[m
+[31m-MONGO_DATABASE=resources[m
+\ No newline at end of file[m
+[32m+[m[32mMONGO_CLIENT_URI=mongodb://localhost:27017[m
+[32m+[m[32mMONGO_DATABASE=myDB[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/java/com/salesken/ai/utils/DBProperties.java b/src/main/java/salesken/ai/utils/DBProperties.java[m
+[1msimilarity index 95%[m
+[1mrename from src/main/java/com/salesken/ai/utils/DBProperties.java[m
+[1mrename to src/main/java/salesken/ai/utils/DBProperties.java[m
+[1mindex 945c6ab..38791f6 100644[m
+[1m--- a/src/main/java/com/salesken/ai/utils/DBProperties.java[m
+[1m+++ b/src/main/java/salesken/ai/utils/DBProperties.java[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-package com.salesken.ai.utils;[m
+[32m+[m[32mpackage salesken.ai.utils;[m
+ [m
+ /**[m
+  * [m
+[1mdiff --git a/src/main/java/com/salesken/ai/utils/MongoDBUtils.java b/src/main/java/salesken/ai/utils/MongoDBUtils.java[m
+[1msimilarity index 63%[m
+[1mrename from src/main/java/com/salesken/ai/utils/MongoDBUtils.java[m
+[1mrename to src/main/java/salesken/ai/utils/MongoDBUtils.java[m
+[1mindex d4888f1..1a5c284 100644[m
+[1m--- a/src/main/java/com/salesken/ai/utils/MongoDBUtils.java[m
+[1m+++ b/src/main/java/salesken/ai/utils/MongoDBUtils.java[m
+[36m@@ -1,6 +1,8 @@[m
+[31m-package com.salesken.ai.utils;[m
+[31m-import java.net.URLEncoder;[m
+[31m-import java.nio.charset.StandardCharsets;[m
+[32m+[m[32mpackage salesken.ai.utils;[m
+[32m+[m[32mimport java.beans.PropertyVetoException;[m
+[32m+[m
+[32m+[m[32mimport org.slf4j.Logger;[m
+[32m+[m[32mimport org.slf4j.LoggerFactory;[m
+ [m
+ import com.mongodb.MongoClient;[m
+ import com.mongodb.MongoClientURI;[m
+[36m@@ -41,16 +43,10 @@[m [mpublic class MongoDBUtils {[m
+ 	private synchronized static MongoClient getDataSource() {[m
+ 		MongoClient mongoClient = null;[m
+ 		try {[m
+[31m-			String user=DBProperties.getProperty("MONGO_USER");[m
+[31m-			String password = URLEncoder.encode(DBProperties.getProperty("MONGO_PASS"), StandardCharsets.UTF_8.toString());[m
+[31m-			String dataBase = DBProperties.getProperty("MONGO_DATABASE");[m
+[31m-			String url="mongodb+srv://"+user+":"+password+"@resources.tmkqk.mongodb.net/"+dataBase+"?retryWrites=true&w=majority";[m
+[31m-			[m
+[31m-			MongoClientURI connectionString = new MongoClientURI(url);[m
+[32m+[m			[32mMongoClientURI connectionString = new MongoClientURI(DBProperties.getProperty("MONGO_CLIENT_URI"));[m
+ 			mongoClient = new MongoClient(connectionString);[m
+[31m-		    mongoDB = mongoClient.getDatabase(dataBase);[m
+[32m+[m		[32m    mongoDB = mongoClient.getDatabase(DBProperties.getProperty("MONGO_DATABASE"));[m
+ 		} catch (Exception e) {[m
+[31m-[m
+ 			e.printStackTrace();[m
+ 		}[m
+ 		return mongoClient;[m
+[1mdiff --git a/src/test/java/io/swagger/api/OrganizationApiTest.java b/src/test/java/io/swagger/api/OrganizationApiTest.java[m
+[1mdeleted file mode 100644[m
+[1mindex 9ef3d9b..0000000[m
+[1m--- a/src/test/java/io/swagger/api/OrganizationApiTest.java[m
+[1m+++ /dev/null[m
+[36m@@ -1,162 +0,0 @@[m
+[31m-/**[m
+[31m- * Salesken Organization APIs[m
+[31m- * <b>Introduction</b><br><br>This is collection of Organization APIs. These are used to create organization, fetch organization records, update organization and invoke organization.<br><br> <b>Authentication</b><br><br> Salesken Organization APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.[m
+[31m- *[m
+[31m- * OpenAPI spec version: 1.0.0[m
+[31m- * Contact: itadmin@salesken.ai[m
+[31m- *[m
+[31m- * NOTE: This class is auto generated by the swagger code generator program.[m
+[31m- * https://github.com/swagger-api/swagger-codegen.git[m
+[31m- * Do not edit the class manually.[m
+[31m- *[m
+[31m- * Licensed under the Apache License, Version 2.0 (the "License");[m
+[31m- * you may not use this file except in compliance with the License.[m
+[31m- * You may obtain a copy of the License at[m
+[31m- *[m
+[31m- * http://www.apache.org/licenses/LICENSE-2.0[m
+[31m- *[m
+[31m- * Unless required by applicable law or agreed to in writing, software[m
+[31m- * distributed under the License is distributed on an "AS IS" BASIS,[m
+[31m- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[31m- * See the License for the specific language governing permissions and[m
+[31m- * limitations under the License.[m
+[31m- */[m
+[31m-[m
+[31m-package io.swagger.api;[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-import org.junit.Test;[m
+[31m-import org.junit.Before;[m
+[31m-import static org.junit.Assert.*;[m
+[31m-[m
+[31m-import javax.ws.rs.core.Response;[m
+[31m-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;[m
+[31m-import org.apache.cxf.jaxrs.client.ClientConfiguration;[m
+[31m-import org.apache.cxf.jaxrs.client.WebClient;[m
+[31m-[m
+[31m-[m
+[31m-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;[m
+[31m-import com.salesken.ai.api.OrganizationApi;[m
+[31m-import com.salesken.ai.model.DatatableModel;[m
+[31m-import com.salesken.ai.model.FilterModel;[m
+[31m-import com.salesken.ai.model.Organization;[m
+[31m-[m
+[31m-import java.util.ArrayList;[m
+[31m-import java.util.HashMap;[m
+[31m-import java.util.List;[m
+[31m-import java.util.Map;[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-/**[m
+[31m- * Salesken Organization APIs[m
+[31m- *[m
+[31m- * <p><b>Introduction</b><br><br>This is collection of Organization APIs. These are used to create organization, fetch organization records, update organization and invoke organization.<br><br> <b>Authentication</b><br><br> Salesken Organization APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.[m
+[31m- *[m
+[31m- * API tests for OrganizationApi [m
+[31m- */[m
+[31m-public class OrganizationApiTest {[m
+[31m-[m
+[31m-[m
+[31m-    private OrganizationApi api;[m
+[31m-    [m
+[31m-    @Before[m
+[31m-    public void setup() {[m
+[31m-        JacksonJsonProvider provider = new JacksonJsonProvider();[m
+[31m-        List providers = new ArrayList();[m
+[31m-        providers.add(provider);[m
+[31m-        [m
+[31m-        api = JAXRSClientFactory.create("https://virtserver.swaggerhub.com/Salesken8/Organization-DataTable-Test/1.0.0", OrganizationApi.class, providers);[m
+[31m-        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);[m
+[31m-        [m
+[31m-        ClientConfiguration config = WebClient.getConfig(client); [m
+[31m-    }[m
+[31m-[m
+[31m-    /**[m
+[31m-     * Create a organization.[m
+[31m-     *[m
+[31m-     * This API will take an input array as a name, website url, description, address and contact details for organization creation and returns the organization details in response.&lt;br&gt;&lt;b&gt; | Organization Model Description - &lt;/b&gt; &lt;b&gt;&lt;br&gt; &lt;br&gt;1. Organisation Name (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the name for the organization.&lt;/li&gt; &lt;li&gt;Name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.&lt;/li&gt; &lt;li&gt;It should contain a valid organization name.&lt;/li&gt; &lt;li&gt;This property should not have any special characters and also should not contain more than one space together. &lt;/li&gt; &lt;li&gt;This property should be normalized. e.g. It should not contain any kind of code into it.&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;ABC Organization&lt;/li&gt; &lt;li&gt;99 Acres&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;ABC@ Organization&lt;/li&gt; &lt;li&gt;Abc987!&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Description (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the description for the organization.&lt;/li&gt; &lt;li&gt;Description property should contain at least 3 characters and a maximum of 250 characters of letters and digits and also should not contain more than one space together. &lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;This is the discription of ABC Organization&lt;/li&gt; &lt;li&gt;99 Acres is India Real Estate Property Site...&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 3. Profile (Enum) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the profile for the organization.&lt;/li&gt; &lt;li&gt;Profile enum property can have Software and IT value.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Software&lt;/li&gt; &lt;li&gt;IT&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 4. Website (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the website URL for the organization.&lt;/li&gt; &lt;li&gt;Website property should start with http or https and have a valid URL.&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;https://www.example.com/&lt;/li&gt; &lt;li&gt;https://salesken.ai/&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;ftp://example.com/&lt;/li&gt; &lt;li&gt;smtp://salesken.com/&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 5. Contact Name (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the contactName of the organization. In other words, Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;Contact name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.&lt;/li&gt; &lt;li&gt;This property should not have any special characters and also should not contain more than one space together.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Abc Xyz&lt;/li&gt; &lt;li&gt;Abc 98&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Abc@98&lt;/li&gt; &lt;li&gt;Mr. Xyz&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 6. Contact Email (String)  - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the contact email for the organization. In other words, Email of Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;Contact email property should contain at least 3 characters and a maximum of 254 characters of letters, digits, underscore, dot, hyphen and At the rate symbol.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned and also should not contain more than one space together.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;abc@xyz.com&lt;/li&gt; &lt;li&gt;xyz@salesken.ai&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;abc@salesken.&lt;/li&gt; &lt;li&gt;@abc.com&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 7. Contact Phone (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the contact phone number for the organization. In other words, Phone number of Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;Contact phone number property should contain at least 4 characters and a maximum of 15 characters of digits.&lt;/li&gt; &lt;li&gt;This property should not have any character and any special characters.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;919988776655&lt;/li&gt; &lt;li&gt;9988776655&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;+919988776655&lt;/li&gt; &lt;li&gt;99887 76655&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 8. Address (Object) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the address for the organization.&lt;/li&gt; &lt;li&gt;This has four properties - AddressLine 1, AddressLine 2, Landmark, ZipCodeId&lt;/li&gt; &lt;b&gt;A. AddressLine 1 (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the address line 1 for the Address Object.&lt;/li&gt; &lt;li&gt;address line 1 property should contain at least 5 characters and a maximum  of 46 characters of letters, hash, digits, comma, and hyphen.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;#1, 9 Cross Road Salesken, Bengaluru&lt;/li&gt; &lt;li&gt;Leela Palace, Bengaluru&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;@1 -&gt; 9Cross Road!&lt;/li&gt; &lt;li&gt;$1 &lt;&gt; 9Cross Road@&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;B.  AddressLine 2 (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the address line 2 for the Address Object.&lt;/li&gt; &lt;li&gt;Address line 2 property should contain at least 5 characters and a maximum of 46 characters of letters, hash, digits, comma, and hyphen.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Bengaluru, Karnataka&lt;/li&gt; &lt;li&gt;Bengaluru, Karnataka, India&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;@1 Bengaluru!&lt;/li&gt; &lt;li&gt;Ben&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;C. Landmark (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the landmark for the Address Object.&lt;/li&gt; &lt;li&gt;Landmark property should contain  letters, hash, digits, comma, and hyphen.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Salesken&lt;/li&gt; &lt;li&gt;Leela Palace&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;@Salesken&lt;/li&gt; &lt;li&gt;Leela -&gt; Palace&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;D. Pincode (Integer) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the pincode for the Address Object.&lt;/li&gt; &lt;li&gt;Pincode property should contain at least 2 digits and a maximum  of 10 digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;560007&lt;/li&gt; &lt;li&gt;400076&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;1&lt;/li&gt; &lt;li&gt;99887766551&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;E. City (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the city for the Address Object.&lt;/li&gt; &lt;li&gt;City property should contain character and digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Bengaluru&lt;/li&gt; &lt;li&gt;Mumbai&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Mumbai&#x27;s&lt;/li&gt; &lt;li&gt;@Bengaluru&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;F. State (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the state for the Address Object.&lt;/li&gt; &lt;li&gt;State property should contain character and digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Maharastra&lt;/li&gt; &lt;li&gt;Karnataka&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;M@h@r@stra&lt;/li&gt; &lt;li&gt;Karnataka&#x27;&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;G. Country (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the country for the Address Object.&lt;/li&gt; &lt;li&gt;Country property should contain character and digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;India&lt;/li&gt; &lt;li&gt;China&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;India&#x27;s&lt;/li&gt; &lt;li&gt;China&#x27;&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;/ul&gt;&lt;b&gt; &lt;font size&#x3D;3&gt;&lt;b&gt;Response Time &lt;&#x3D;300ms&lt;/b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void createOrganizationTest() {[m
+[31m-        List<Organization> body = null;[m
+[31m-        //List<Organization> response = api.createOrganization(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * Get organizations details.[m
+[31m-     *[m
+[31m-     * This API will take input either orgId or limit and offset and order by columns id and direction and returns the organization details according to filter properties.&lt;br&gt;&lt;b&gt; | Filter Model Description - &lt;/b&gt; &lt;b&gt;&lt;br&gt; &lt;br&gt;1. Id (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property is a unique identifier for organization in salesken database.&lt;/li&gt; &lt;li&gt;And the Id property should be greater than 0 and less than or equal to integer range (2147483647).&lt;/li&gt; &lt;li&gt;If passing Id then no other property need to be passed.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 1, 2, 3 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Limit (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Number of records that the table can display in the current draw.&lt;/li&gt; &lt;li&gt;It is expected that the number of records returned will be equal to this number.&lt;/li&gt; &lt;li&gt;This property can be -1 to indicate that all records should be returned&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;Please refer /organization/create to know limitation of organization name.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 1, 2, 3, 100 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Offset (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Paging first record indicator.&lt;/li&gt; &lt;li&gt;This is the start point in the current data set (0 index based - i.e. 0 is the first record).&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 0, 10, 15 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 6. Order (Array) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;b&gt;A. Column (Integer) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Column to which ordering should be applied.&lt;/li&gt; &lt;li&gt;This is an index reference to the columns array of information that is also submitted to the server.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 0, 1, 2, 3 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;B. Dir (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Ordering direction for this column. It will be asc or desc to indicate ascending ordering or descending ordering, respectively.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - asc, desc etc.&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt;&lt;b&gt; &lt;font size&#x3D;3&gt;&lt;b&gt;Response Time &lt;&#x3D;300ms&lt;/b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void getFilteredOrganizationsTest() {[m
+[31m-        FilterModel body = null;[m
+[31m-        //List<Organization> response = api.getFilteredOrganizations(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * Datatable response for list of organizations.[m
+[31m-     *[m
+[31m-     * This api will be used to populate paginated  datatable response for the list of organizations.&lt;br&gt;&lt;b&gt; | DataTable Model Description - &lt;/b&gt; &lt;b&gt;&lt;br&gt; &lt;br&gt;1. Draw (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Draw counter. This is used by DataTables to ensure that the Ajax returns from server-side processing requests are drawn in sequence by DataTables&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 1, 3, 4, 5 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Start (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Paging first record indicator.&lt;/li&gt; &lt;li&gt;This is the start point in the current data set (0 index based - i.e. 0 is the first record).&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 0, 1, 2, 4 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 3. Length (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Number of records that the table can display in the current draw.&lt;/li&gt; &lt;li&gt;It is expected that the number of records returned will be equal to this number.&lt;/li&gt; &lt;li&gt;This property can be -1 to indicate that all records should be returned&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 1, 2, 3, 4 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 4. Search (Object) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;b&gt;A. Value (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Global search value. To be applied to all columns which have searchable as true.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;id&lt;/li&gt; &lt;li&gt;name&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;name@Org&lt;/li&gt; &lt;li&gt;name!&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;B. Regex (Boolean) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;True if the global filter should be treated as a regular expression for advanced searching, False otherwise.&lt;/li&gt; &lt;li&gt;Note that normally server-side processing scripts will not perform regular expression searching for performance reasons on large data sets&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - true, false etc.&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 5. Columns (Array) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;b&gt;A. Data (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property can be used to read and write data to and from any data source property, including deeply nested objects / properties.&lt;/li&gt; &lt;li&gt;Data can be given in a number of different ways which affect its behaviour.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - Abc Organization, Xyz Configuration&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;B. Name (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Column&#x27;s name&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;id&lt;/li&gt; &lt;li&gt;name&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;org@name&lt;/li&gt; &lt;li&gt;org@id!&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;C. Searchable (Boolean) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Flag to indicate if this column is searchable (true) or not (false).&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - true, false etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;D. Orderable (Boolean) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Flag to indicate if this column is orderable (true) or not (false).&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - true, false etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;E. Search (Object) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Already Described Above.&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 6. Order (Array) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;b&gt;A. Column (Integer) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Column to which ordering should be applied.&lt;/li&gt; &lt;li&gt;This is an index reference to the columns array of information that is also submitted to the server.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 0, 1, 2, 3 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;B. Dir (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Ordering direction for this column. It will be asc or desc to indicate ascending ordering or descending ordering, respectively.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - asc, desc etc.&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt;&lt;b&gt; &lt;font size&#x3D;3&gt;&lt;b&gt;Response Time &lt;&#x3D;300ms&lt;/b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void getPaginatedOrganizationTest() {[m
+[31m-        DatatableModel body = null;[m
+[31m-        //List<Organization> response = api.getPaginatedOrganization(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * Invoke an existing organization.[m
+[31m-     *[m
+[31m-     * This API will take input as a organization id for organization deletion and returns the response e.g. (true/false).&lt;br&gt; &lt;b&gt;&lt;br&gt; 1. Organization Id (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the id for the organization. And it will be unique for an organization&lt;/li&gt; &lt;li&gt;ID property should be greater than 0 and less than integer range (2147483647).&lt;/li&gt; &lt;li&gt;It should contain a valid organization Id.&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 1, 2, 3 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; &lt;font size&#x3D;3&gt;&lt;b&gt;Response Time &lt;&#x3D;300ms&lt;/b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void invokeOrganizationTest() {[m
+[31m-        Long organizationId = null;[m
+[31m-        //SaleskenResponse response = api.invokeOrganization(organizationId);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * update existing organization.[m
+[31m-     *[m
+[31m-     * This API will take an input array as a id, name, website url, description, address and contact details for organization updation and returns the organization details in response.&lt;br&gt;&lt;b&gt; | Organization Model Description - &lt;/b&gt; &lt;b&gt;&lt;br&gt; &lt;br&gt;1. Id (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the id for the organization. And it will be unique for an organization&lt;/li&gt; &lt;li&gt;ID property should be greater than 0 and less than integer range (2147483647).&lt;/li&gt; &lt;li&gt;It should contain a valid organization Id.&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Examples&lt;/b&gt; - 1, 2, 3 etc.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Organisation Name (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the name for the organization.&lt;/li&gt; &lt;li&gt;Name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.&lt;/li&gt; &lt;li&gt;It should contain a valid organization name.&lt;/li&gt; &lt;li&gt;This property should not have any special characters and also should not contain more than one space together. &lt;/li&gt; &lt;li&gt;This property should be normalized. e.g. It should not contain any kind of code into it.&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;ABC Organization&lt;/li&gt; &lt;li&gt;99 Acres&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;ABC@ Organization&lt;/li&gt; &lt;li&gt;Abc987!&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 3. Description (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the description for the organization.&lt;/li&gt; &lt;li&gt;Description property should contain at least 3 characters and a maximum of 250 characters of letters and digits and also should not contain more than one space together. &lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;This is the discription of ABC Organization&lt;/li&gt; &lt;li&gt;99 Acres is India Real Estate Property Site...&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 4. Profile (Enum) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the profile for the organization.&lt;/li&gt; &lt;li&gt;Profile enum property can have Software and IT value.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Software&lt;/li&gt; &lt;li&gt;IT&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 5. Website (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the website URL for the organization.&lt;/li&gt; &lt;li&gt;Website property should start with http or https and have a valid URL.&lt;/li&gt; &lt;li&gt;Property is mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;https://www.example.com/&lt;/li&gt; &lt;li&gt;https://salesken.ai/&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;ftp://example.com/&lt;/li&gt; &lt;li&gt;smtp://salesken.com/&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 6. Contact Name (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the contactName of the organization. In other words, Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;Contact name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.&lt;/li&gt; &lt;li&gt;This property should not have any special characters and also should not contain more than one space together.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Abc Xyz&lt;/li&gt; &lt;li&gt;Abc 98&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Abc@98&lt;/li&gt; &lt;li&gt;Mr. Xyz&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 7. Contact Email (String)  - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the contact email for the organization. In other words, Email of Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;Contact email property should contain at least 3 characters and a maximum of 254 characters of letters, digits, underscore, dot, hyphen and At the rate symbol.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned and also should not contain more than one space together.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;abc@xyz.com&lt;/li&gt; &lt;li&gt;xyz@salesken.ai&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;abc@salesken.&lt;/li&gt; &lt;li&gt;@abc.com&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 8. Contact Phone (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the contact phone number for the organization. In other words, Phone number of Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;Contact phone number property should contain at least 4 characters and a maximum of 15 characters of digits.&lt;/li&gt; &lt;li&gt;This property should not have any character and any special characters.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;919988776655&lt;/li&gt; &lt;li&gt;9988776655&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;+919988776655&lt;/li&gt; &lt;li&gt;99887 76655&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 9. Address (Object) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the address for the organization.&lt;/li&gt; &lt;li&gt;This has four properties - AddressLine 1, AddressLine 2, Landmark, ZipCodeId&lt;/li&gt; &lt;b&gt;A. AddressLine 1 (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the address line 1 for the Address Object.&lt;/li&gt; &lt;li&gt;address line 1 property should contain at least 5 characters and a maximum  of 46 characters of letters, hash, digits, comma, and hyphen.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;#1, 9 Cross Road Salesken, Bengaluru&lt;/li&gt; &lt;li&gt;Leela Palace, Bengaluru&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;@1 -&gt; 9Cross Road!&lt;/li&gt; &lt;li&gt;$1 &lt;&gt; 9Cross Road@&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;B.  AddressLine 2 (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the address line 2 for the Address Object.&lt;/li&gt; &lt;li&gt;Address line 2 property should contain at least 5 characters and a maximum of 46 characters of letters, hash, digits, comma, and hyphen.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Bengaluru, Karnataka&lt;/li&gt; &lt;li&gt;Bengaluru, Karnataka, India&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;@1 Bengaluru!&lt;/li&gt; &lt;li&gt;Ben&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;C. Landmark (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the landmark for the Address Object.&lt;/li&gt; &lt;li&gt;Landmark property should contain  letters, hash, digits, comma, and hyphen.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Salesken&lt;/li&gt; &lt;li&gt;Leela Palace&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;@Salesken&lt;/li&gt; &lt;li&gt;Leela -&gt; Palace&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;D. Pincode (Integer) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the pincode for the Address Object.&lt;/li&gt; &lt;li&gt;Pincode property should contain at least 2 digits and a maximum  of 10 digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;560007&lt;/li&gt; &lt;li&gt;400076&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;1&lt;/li&gt; &lt;li&gt;99887766551&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;E. City (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the city for the Address Object.&lt;/li&gt; &lt;li&gt;City property should contain character and digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Bengaluru&lt;/li&gt; &lt;li&gt;Mumbai&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Mumbai&#x27;s&lt;/li&gt; &lt;li&gt;@Bengaluru&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;F. State (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the state for the Address Object.&lt;/li&gt; &lt;li&gt;State property should contain character and digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;Maharastra&lt;/li&gt; &lt;li&gt;Karnataka&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;M@h@r@stra&lt;/li&gt; &lt;li&gt;Karnataka&#x27;&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;G. Country (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property will define the country for the Address Object.&lt;/li&gt; &lt;li&gt;Country property should contain character and digits.&lt;/li&gt; &lt;li&gt;Property is not mandatory.&lt;/li&gt; &lt;li&gt;&lt;b&gt;Valid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;India&lt;/li&gt; &lt;li&gt;China&lt;/li&gt; &lt;/ul&gt; &lt;li&gt;&lt;b&gt;Invalid Examples&lt;/b&gt;&lt;/li&gt; &lt;ul&gt; &lt;li&gt;India&#x27;s&lt;/li&gt; &lt;li&gt;China&#x27;&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;/ul&gt;&lt;b&gt; &lt;font size&#x3D;3&gt;&lt;b&gt;Response Time &lt;&#x3D;300ms&lt;/b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void updateOrganizationTest() {[m
+[31m-        List<Organization> body = null;[m
+[31m-        //List<Organization> response = api.updateOrganization(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-}[m
+[1mdiff --git a/src/test/java/io/swagger/api/UserApiTest.java b/src/test/java/io/swagger/api/UserApiTest.java[m
+[1mdeleted file mode 100644[m
+[1mindex c6c7b13..0000000[m
+[1m--- a/src/test/java/io/swagger/api/UserApiTest.java[m
+[1m+++ /dev/null[m
+[36m@@ -1,161 +0,0 @@[m
+[31m-/**[m
+[31m- * Salesken User APIs[m
+[31m- * <b>Introduction</b><br><br>This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.<br><br> <b>Authentication</b><br><br> Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.[m
+[31m- *[m
+[31m- * OpenAPI spec version: 1.0.0[m
+[31m- * Contact: itadmin@salesken.ai[m
+[31m- *[m
+[31m- * NOTE: This class is auto generated by the swagger code generator program.[m
+[31m- * https://github.com/swagger-api/swagger-codegen.git[m
+[31m- * Do not edit the class manually.[m
+[31m- *[m
+[31m- * Licensed under the Apache License, Version 2.0 (the "License");[m
+[31m- * you may not use this file except in compliance with the License.[m
+[31m- * You may obtain a copy of the License at[m
+[31m- *[m
+[31m- * http://www.apache.org/licenses/LICENSE-2.0[m
+[31m- *[m
+[31m- * Unless required by applicable law or agreed to in writing, software[m
+[31m- * distributed under the License is distributed on an "AS IS" BASIS,[m
+[31m- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[m
+[31m- * See the License for the specific language governing permissions and[m
+[31m- * limitations under the License.[m
+[31m- */[m
+[31m-[m
+[31m-package io.swagger.api;[m
+[31m-[m
+[31m-[m
+[31m-import org.junit.Test;[m
+[31m-import org.junit.Before;[m
+[31m-import static org.junit.Assert.*;[m
+[31m-[m
+[31m-import javax.ws.rs.core.Response;[m
+[31m-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;[m
+[31m-import org.apache.cxf.jaxrs.client.ClientConfiguration;[m
+[31m-import org.apache.cxf.jaxrs.client.WebClient;[m
+[31m-[m
+[31m-[m
+[31m-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;[m
+[31m-import com.salesken.ai.api.UserApi;[m
+[31m-import com.salesken.ai.model.DatatableModel;[m
+[31m-import com.salesken.ai.model.FilterModel;[m
+[31m-import com.salesken.ai.model.User;[m
+[31m-[m
+[31m-import java.util.ArrayList;[m
+[31m-import java.util.HashMap;[m
+[31m-import java.util.List;[m
+[31m-import java.util.Map;[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-/**[m
+[31m- * Salesken User APIs[m
+[31m- *[m
+[31m- * <p><b>Introduction</b><br><br>This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.<br><br> <b>Authentication</b><br><br> Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.[m
+[31m- *[m
+[31m- * API tests for UserApi [m
+[31m- */[m
+[31m-public class UserApiTest {[m
+[31m-[m
+[31m-[m
+[31m-    private UserApi api;[m
+[31m-    [m
+[31m-    @Before[m
+[31m-    public void setup() {[m
+[31m-        JacksonJsonProvider provider = new JacksonJsonProvider();[m
+[31m-        List providers = new ArrayList();[m
+[31m-        providers.add(provider);[m
+[31m-        [m
+[31m-        api = JAXRSClientFactory.create("https://virtserver.swaggerhub.com/Salesken8/Users/1.0.0", UserApi.class, providers);[m
+[31m-        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);[m
+[31m-        [m
+[31m-        ClientConfiguration config = WebClient.getConfig(client); [m
+[31m-    }[m
+[31m-[m
+[31m-    /**[m
+[31m-     * Create a user.[m
+[31m-     *[m
+[31m-     * This API will take input as a name, email, phone, password and designation image url, manager id and role for user creation and returns the user details in response.&lt;br&gt;&lt;b&gt; User Model Description - &lt;/b&gt; &lt;b&gt;&lt;br&gt; &lt;br&gt;1. user Name (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the name for the user.&lt;/li&gt; &lt;li&gt;Name property should contain at least 3 characters and a maximum of 46 characters of letters and digits.&lt;/li&gt; &lt;li&gt;It should contain a valid user name.&lt;/li&gt; &lt;li&gt;This property should not have any special characters and also should not contain more than one space together. &lt;/li&gt; &lt;li&gt;This property can not be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Email (String)  - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the user&#x27;s email. In other words, Email of Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;user&#x27;s email property should contain at least 3 characters and a maximum of 254 characters of letters, digits, underscore, dot, hyphen and At the rate symbol.&lt;/li&gt; &lt;li&gt;This property should not have special characters other than the mentioned and also should not contain more than one space together.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 3. Phone (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the phone number for the user. In other words, Phone number of Point of contact for Salesken.&lt;/li&gt; &lt;li&gt;user&#x27;s phone number property should contain at least 4 characters and a maximum of 15 characters of digits.&lt;/li&gt; &lt;li&gt;This property should not have any character and any special characters.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 4. Password (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the password for the organization.&lt;/li&gt; &lt;li&gt;password property should contain at least 8 characters and a maximum of 250 characters of letters and digits and also should not contain space. &lt;/li&gt; &lt;li&gt;This property can not be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 5. designation (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the designation for the organization.&lt;/li&gt; &lt;li&gt;Profile enum property can have Software and IT value.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 6. ImageUrl (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the Image URL for the User.&lt;/li&gt; &lt;li&gt;This property can not be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 7. managerId (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the managerId of the user.&lt;/li&gt; &lt;li&gt;This property should not have any special characters and also should not contain space .&lt;/li&gt; &lt;li&gt;manager Id property should be greater than 0 and less than integer range (2147483647).&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 8. role (Enum) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property will define the role for the organization.&lt;/li&gt; &lt;li&gt;Profile enum property can have different role values.&lt;/li&gt; &lt;li&gt;This property can not be null.&lt;/li&gt; &lt;/ul&gt;&lt;b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void createUserTest() {[m
+[31m-        User body = null;[m
+[31m-        //User response = api.createUser(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * Delete an existing user.[m
+[31m-     *[m
+[31m-     * This API will take input as a user id for user deletion and returns the response e.g. (true/false).&lt;br&gt;&lt;b&gt; 1. User ID (Integer) - &lt;br&gt; &lt;/b&gt; This property is a unique identifier for user in salesken database. And User Id property should be greater than 0 and less than integer range (2147483647).&lt;br&gt;&lt;b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void deleteUserTest() {[m
+[31m-        Long userId = null;[m
+[31m-        //SaleskenResponse response = api.deleteUser(userId);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * Get users details.[m
+[31m-     *[m
+[31m-     * This API will take input either orgId or limit and offset and returns the user details according to filter properties.&lt;br&gt;&lt;b&gt; | Filter Model Description - &lt;/b&gt; &lt;b&gt;&lt;br&gt; &lt;br&gt;1. Id (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property is a unique identifier for organization in salesken database.&lt;/li&gt; &lt;li&gt;And the Id property should be greater than 0 and less than or equal to integer range (2147483647).&lt;/li&gt; &lt;li&gt;If passing Id then no other property need to be passed.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Name (String) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;This property defines the name of the organization and this property is not a unique for organization in salesken database.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Limit (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Number of records that the table can display in the current draw.&lt;/li&gt; &lt;li&gt;It is expected that the number of records returned will be equal to this number.&lt;/li&gt; &lt;li&gt;This property can be -1 to indicate that all records should be returned&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;li&gt;Please refer /organization/create to know limitation of organization name.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Offset (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Paging first record indicator.&lt;/li&gt; &lt;li&gt;This is the start point in the current data set (0 index based - i.e. 0 is the first record).&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void getFilteredUsersTest() {[m
+[31m-        FilterModel body = null;[m
+[31m-        //List<User> response = api.getFilteredUsers(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * Datatable response for list of organizations.[m
+[31m-     *[m
+[31m-     * This api will be used to populate paginated  datatable response for the list of organizations.&lt;br&gt;&lt;b&gt; | DataTable Model Description - &lt;/b&gt; &lt;b&gt;&lt;br&gt; &lt;br&gt;1. Draw (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Draw counter. This is used by DataTables to ensure that the Ajax returns from server-side processing requests are drawn in sequence by DataTables&lt;/li&gt; &lt;li&gt;This property can not be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 2. Start (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Paging first record indicator.&lt;/li&gt; &lt;li&gt;This is the start point in the current data set (0 index based - i.e. 0 is the first record).&lt;/li&gt; &lt;li&gt;This property can not be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 3. Length (Integer) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;li&gt;Number of records that the table can display in the current draw.&lt;/li&gt; &lt;li&gt;It is expected that the number of records returned will be equal to this number.&lt;/li&gt; &lt;li&gt;This property can be -1 to indicate that all records should be returned&lt;/li&gt; &lt;li&gt;This property can not be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 4. Search (Object) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;b&gt;A. Value (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Global search value. To be applied to all columns which have searchable as true.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;B. Regex (Boolean) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;True if the global filter should be treated as a regular expression for advanced searching, False otherwise.&lt;/li&gt; &lt;li&gt;Note that normally server-side processing scripts will not perform regular expression searching for performance reasons on large data sets&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 5. Columns (Array) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;b&gt;A. Data (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;This property can be used to read and write data to and from any data source property, including deeply nested objects / properties.&lt;/li&gt; &lt;li&gt;Data can be given in a number of different ways which affect its behaviour.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;B. Name (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Column&#x27;s name&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;C. Searchable (Boolean) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Flag to indicate if this column is searchable (true) or not (false).&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;D. Orderable (Boolean) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Flag to indicate if this column is orderable (true) or not (false).&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;E. Search (Object) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Already Described Above.&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt; &lt;b&gt;&lt;br&gt; 6. Order (Array) - &lt;/b&gt;&lt;br&gt; &lt;ul&gt; &lt;b&gt;A. Column (Integer) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Column to which ordering should be applied.&lt;/li&gt; &lt;li&gt;This is an index reference to the columns array of information that is also submitted to the server.&lt;/li&gt; &lt;/ul&gt; &lt;b&gt;B. Dir (String) - &lt;/b&gt; &lt;ul&gt; &lt;li&gt;Ordering direction for this column. It will be asc or desc to indicate ascending ordering or descending ordering, respectively.&lt;/li&gt; &lt;li&gt;This property can be null.&lt;/li&gt; &lt;/ul&gt; &lt;/ul&gt;&lt;b&gt;[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void getPaginatedUsersTest() {[m
+[31m-        DatatableModel body = null;[m
+[31m-        //List<User> response = api.getPaginatedUsers(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-    /**[m
+[31m-     * update existing user.[m
+[31m-     *[m
+[31m-     * to update user.[m
+[31m-     *[m
+[31m-     * @throws ApiException[m
+[31m-     *          if the Api call fails[m
+[31m-     */[m
+[31m-    @Test[m
+[31m-    public void updateUserTest() {[m
+[31m-        User body = null;[m
+[31m-        //User response = api.updateUser(body);[m
+[31m-        //assertNotNull(response);[m
+[31m-        // TODO: test validations[m
+[31m-        [m
+[31m-        [m
+[31m-    }[m
+[31m-}[m
+[1mdiff --git a/src/test/java/io/swagger/api/mongoDBTest.java b/src/test/java/io/swagger/api/mongoDBTest.java[m
+[1mdeleted file mode 100644[m
+[1mindex 007eadb..0000000[m
+[1m--- a/src/test/java/io/swagger/api/mongoDBTest.java[m
+[1m+++ /dev/null[m
+[36m@@ -1,13 +0,0 @@[m
+[31m-package io.swagger.api;[m
+[31m-[m
+[31m-import com.mongodb.client.MongoIterable;[m
+[31m-import com.salesken.ai.utils.MongoDBUtils;[m
+[31m-[m
+[31m-public class mongoDBTest {[m
+[31m-	public static void main(String[] args) {[m
+[31m-		MongoIterable<String> yo = MongoDBUtils.getInstance().getDatabase().listCollectionNames();[m
+[31m-		for (String string : yo) {[m
+[31m-			System.out.println(string);[m
+[31m-		}[m
+[31m-	}[m
+[31m-}[m

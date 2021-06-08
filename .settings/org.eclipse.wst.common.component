@@ -2,7 +2,7 @@
                 
     
     
-    <wb-module deploy-name="organization-1.0.0">
+    <wb-module deploy-name="ROOT">
                                 
         
         
@@ -23,7 +23,7 @@
         
         
         <property name="java-output-path" value="/swagger-cxf-server/target/classes"/>
-        <property name="context-root" value="organization"/>
+        <property name="context-root" value="ROOT"/>
                             
     
     

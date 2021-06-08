@@ -6,15 +6,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.MediaType;
-import org.apache.cxf.jaxrs.ext.multipart.*;
 
+import com.ibm.watson.developer_cloud.service.exception.BadRequestException;
 import com.salesken.ai.api.exception.AuthTokenInvalidException;
 import com.salesken.ai.api.exception.AuthTokenNotSuppliedException;
 import com.salesken.ai.api.exception.InternalServerException;
 import com.salesken.ai.api.exception.InvalidInputException;
+import com.salesken.ai.api.exception.NotFoundException;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
 import com.salesken.ai.model.Organization;
@@ -27,6 +25,13 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.validation.Valid;
 
 /**
