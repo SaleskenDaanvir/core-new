@@ -4,6 +4,7 @@ package com.salesken.ai.api.impl;
 
 import java.util.List;
 
+import com.salesken.ai.DAOImpl.UserDAOImpl;
 import com.salesken.ai.api.UserApi;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
@@ -21,8 +22,9 @@ public class UserApiServiceImpl implements UserApi {
 
 	@Override
 	public User createUser(User body) {
-		// TODO Auto-generated method stub
-		return null;
+		UserDAOImpl userImpl = new UserDAOImpl();
+		userImpl.insertUser(body);
+		return body;
 	}
 
 	@Override
