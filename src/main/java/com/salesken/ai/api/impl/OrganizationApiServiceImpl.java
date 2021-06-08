@@ -9,6 +9,7 @@ import com.mongodb.client.MongoCollection;
 import com.salesken.ai.api.OrganizationApi;
 import com.salesken.ai.api.exception.NotFoundException;
 import com.salesken.ai.api.exception.NotFoundException.ResponseTypeEnum;
+import com.salesken.ai.api.service.OrganizationApiService;
 import com.salesken.ai.dao.impl.OrganizationDaoImpl;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
@@ -35,7 +36,7 @@ import clojure.main;
  * sign-up with the Salesken.
  *
  */
-public class OrganizationApiServiceImpl implements OrganizationApi {
+public class OrganizationApiServiceImpl implements OrganizationApiService {
 
 	@Override
 	public List<Organization> createOrganization(List<Organization> body) {
