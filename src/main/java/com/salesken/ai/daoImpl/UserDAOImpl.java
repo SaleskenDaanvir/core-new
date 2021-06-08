@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.salesken.ai.DAOImpl;
+package com.salesken.ai.daoImpl;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;

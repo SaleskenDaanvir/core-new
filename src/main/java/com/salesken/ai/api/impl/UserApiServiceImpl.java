@@ -4,7 +4,7 @@ package com.salesken.ai.api.impl;
 
 import java.util.List;
 
-import com.salesken.ai.DAOImpl.UserDAOImpl;
+import com.salesken.ai.daoImpl.UserDAOImpl;
 import com.salesken.ai.api.UserApi;
 import com.salesken.ai.model.DatatableModel;
 import com.salesken.ai.model.FilterModel;
