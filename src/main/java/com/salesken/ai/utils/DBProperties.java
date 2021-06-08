@@ -1,4 +1,4 @@
-package salesken.ai.utils;
+package com.salesken.ai.utils;
 
 /**
  * 
