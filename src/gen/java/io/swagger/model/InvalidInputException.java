@@ -1,7 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.model.BadRequestErrorType;
-import io.swagger.model.ErrorType;
 import javax.validation.constraints.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,14 +19,37 @@ public class InvalidInputException   {
   @Schema(example = "405", required = true, description = "")
   private Integer responseCode = null;
   
-  @Schema(required = true, description = "")
-  private String errorCode = null;
-  
-  @Schema(required = true, description = "")
-  private BadRequestErrorType responseMessage = null;
-  
-  @Schema(required = true, description = "")
-  private ErrorType responseType = null;
+  @Schema(example = "Invalid input", required = true, description = "")
+  private String responseMessage = null;
+  public enum ResponseTypeEnum {
+    INPUT("Invalid input");
+
+    private String value;
+
+    ResponseTypeEnum(String value) {
+      this.value = value;
+    }
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+    @JsonCreator
+    public static ResponseTypeEnum fromValue(String text) {
+      for (ResponseTypeEnum b : ResponseTypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }  
+  @Schema(description = "")
+  private ResponseTypeEnum responseType = null;
  /**
    * Get responseCode
    * @return responseCode
@@ -49,39 +70,20 @@ public class InvalidInputException   {
   }
 
  /**
-   * Get errorCode
-   * @return errorCode
-  **/
-  @JsonProperty("errorCode")
-  @NotNull
-  public String getErrorCode() {
-    return errorCode;
-  }
-
-  public void setErrorCode(String errorCode) {
-    this.errorCode = errorCode;
-  }
-
-  public InvalidInputException errorCode(String errorCode) {
-    this.errorCode = errorCode;
-    return this;
-  }
-
- /**
    * Get responseMessage
    * @return responseMessage
   **/
   @JsonProperty("responseMessage")
   @NotNull
-  public BadRequestErrorType getResponseMessage() {
+  public String getResponseMessage() {
     return responseMessage;
   }
 
-  public void setResponseMessage(BadRequestErrorType responseMessage) {
+  public void setResponseMessage(String responseMessage) {
     this.responseMessage = responseMessage;
   }
 
-  public InvalidInputException responseMessage(BadRequestErrorType responseMessage) {
+  public InvalidInputException responseMessage(String responseMessage) {
     this.responseMessage = responseMessage;
     return this;
   }
@@ -91,16 +93,18 @@ public class InvalidInputException   {
    * @return responseType
   **/
   @JsonProperty("responseType")
-  @NotNull
-  public ErrorType getResponseType() {
-    return responseType;
+  public String getResponseType() {
+    if (responseType == null) {
+      return null;
+    }
+    return responseType.getValue();
   }
 
-  public void setResponseType(ErrorType responseType) {
+  public void setResponseType(ResponseTypeEnum responseType) {
     this.responseType = responseType;
   }
 
-  public InvalidInputException responseType(ErrorType responseType) {
+  public InvalidInputException responseType(ResponseTypeEnum responseType) {
     this.responseType = responseType;
     return this;
   }
@@ -112,7 +116,6 @@ public class InvalidInputException   {
     sb.append("class InvalidInputException {\n");
     
     sb.append("    responseCode: ").append(toIndentedString(responseCode)).append("\n");
-    sb.append("    errorCode: ").append(toIndentedString(errorCode)).append("\n");
     sb.append("    responseMessage: ").append(toIndentedString(responseMessage)).append("\n");
     sb.append("    responseType: ").append(toIndentedString(responseType)).append("\n");
     sb.append("}");

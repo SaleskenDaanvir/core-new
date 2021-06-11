@@ -20,7 +20,7 @@ public class DatatableSearch   {
   private String value = null;
   
   @Schema(description = "")
-  private Boolean regex = null;
+  private String regex = null;
  /**
    * Get value
    * @return value
@@ -44,15 +44,15 @@ public class DatatableSearch   {
    * @return regex
   **/
   @JsonProperty("regex")
-  public Boolean isRegex() {
+  public String getRegex() {
     return regex;
   }
 
-  public void setRegex(Boolean regex) {
+  public void setRegex(String regex) {
     this.regex = regex;
   }
 
-  public DatatableSearch regex(Boolean regex) {
+  public DatatableSearch regex(String regex) {
     this.regex = regex;
     return this;
   }

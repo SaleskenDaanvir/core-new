@@ -22,7 +22,7 @@ public class SaleskenResponse   {
   @Schema(example = "Success", required = true, description = "")
   private String responseMessage = null;
   
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   private Object response = null;
  /**
    * Get responseCode
@@ -67,7 +67,6 @@ public class SaleskenResponse   {
    * @return response
   **/
   @JsonProperty("response")
-  @NotNull
   public Object getResponse() {
     return response;
   }

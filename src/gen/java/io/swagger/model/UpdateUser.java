@@ -14,12 +14,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class User   {
+public class UpdateUser   {
   
-  @Schema(example = "Abc", required = true, description = "")
+  @Schema(required = true, description = "")
+  private Long id = null;
+  
+  @Schema(example = "Abc", description = "")
   private String name = null;
   
-  @Schema(example = "xyz@abc.com", required = true, description = "")
+  @Schema(example = "xyz@abc.com", description = "")
   private String email = null;
   
   @Schema(example = "919999999999", description = "")
@@ -37,14 +40,33 @@ public class User   {
   @Schema(description = "")
   private Long managerId = null;
   
-  @Schema(required = true, description = "")
+  @Schema(description = "")
   private Integer role = null;
+ /**
+   * Get id
+   * minimum: 1
+   * @return id
+  **/
+  @JsonProperty("id")
+  @NotNull
+ @Min(1L)  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public UpdateUser id(Long id) {
+    this.id = id;
+    return this;
+  }
+
  /**
    * Get name
    * @return name
   **/
   @JsonProperty("name")
-  @NotNull
  @Pattern(regexp="^[A-Za-z0-9]*[A-Za-z0-9][A-Za-z0-9]*$") @Size(min=3)  public String getName() {
     return name;
   }
@@ -53,7 +75,7 @@ public class User   {
     this.name = name;
   }
 
-  public User name(String name) {
+  public UpdateUser name(String name) {
     this.name = name;
     return this;
   }
@@ -63,7 +85,6 @@ public class User   {
    * @return email
   **/
   @JsonProperty("email")
-  @NotNull
  @Pattern(regexp="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$") @Size(max=254)  public String getEmail() {
     return email;
   }
@@ -72,7 +93,7 @@ public class User   {
     this.email = email;
   }
 
-  public User email(String email) {
+  public UpdateUser email(String email) {
     this.email = email;
     return this;
   }
@@ -90,7 +111,7 @@ public class User   {
     this.phone = phone;
   }
 
-  public User phone(String phone) {
+  public UpdateUser phone(String phone) {
     this.phone = phone;
     return this;
   }
@@ -108,7 +129,7 @@ public class User   {
     this.password = password;
   }
 
-  public User password(String password) {
+  public UpdateUser password(String password) {
     this.password = password;
     return this;
   }
@@ -126,7 +147,7 @@ public class User   {
     this.designation = designation;
   }
 
-  public User designation(String designation) {
+  public UpdateUser designation(String designation) {
     this.designation = designation;
     return this;
   }
@@ -144,7 +165,7 @@ public class User   {
     this.imageURL = imageURL;
   }
 
-  public User imageURL(String imageURL) {
+  public UpdateUser imageURL(String imageURL) {
     this.imageURL = imageURL;
     return this;
   }
@@ -162,7 +183,7 @@ public class User   {
     this.managerId = managerId;
   }
 
-  public User managerId(Long managerId) {
+  public UpdateUser managerId(Long managerId) {
     this.managerId = managerId;
     return this;
   }
@@ -172,7 +193,6 @@ public class User   {
    * @return role
   **/
   @JsonProperty("role")
-  @NotNull
   public Integer getRole() {
     return role;
   }
@@ -181,7 +201,7 @@ public class User   {
     this.role = role;
   }
 
-  public User role(Integer role) {
+  public UpdateUser role(Integer role) {
     this.role = role;
     return this;
   }
@@ -190,8 +210,9 @@ public class User   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class User {\n");
+    sb.append("class UpdateUser {\n");
     
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
