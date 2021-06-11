@@ -1,5 +1,8 @@
 package io.swagger.model;
 
+import io.swagger.model.DatatableOrder;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,14 +22,14 @@ public class FilterModel   {
   @Schema(description = "")
   private Integer id = null;
   
-  @Schema(example = "ABC", description = "")
-  private String name = null;
-  
   @Schema(example = "1", description = "")
   private Integer limit = null;
   
-  @Schema(example = "1", description = "")
+  @Schema(example = "0", description = "")
   private Integer offset = null;
+  
+  @Schema(description = "")
+  private List<DatatableOrder> order = null;
  /**
    * Get id
    * minimum: 1
@@ -43,24 +46,6 @@ public class FilterModel   {
 
   public FilterModel id(Integer id) {
     this.id = id;
-    return this;
-  }
-
- /**
-   * Get name
-   * @return name
-  **/
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public FilterModel name(String name) {
-    this.name = name;
     return this;
   }
 
@@ -104,6 +89,29 @@ public class FilterModel   {
     return this;
   }
 
+ /**
+   * Get order
+   * @return order
+  **/
+  @JsonProperty("order")
+  public List<DatatableOrder> getOrder() {
+    return order;
+  }
+
+  public void setOrder(List<DatatableOrder> order) {
+    this.order = order;
+  }
+
+  public FilterModel order(List<DatatableOrder> order) {
+    this.order = order;
+    return this;
+  }
+
+  public FilterModel addOrderItem(DatatableOrder orderItem) {
+    this.order.add(orderItem);
+    return this;
+  }
+
 
   @Override
   public String toString() {
@@ -111,9 +119,9 @@ public class FilterModel   {
     sb.append("class FilterModel {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
+    sb.append("    order: ").append(toIndentedString(order)).append("\n");
     sb.append("}");
     return sb.toString();
   }

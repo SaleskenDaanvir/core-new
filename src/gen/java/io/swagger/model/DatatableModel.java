@@ -82,13 +82,13 @@ public class DatatableModel   {
 
  /**
    * Get length
-   * minimum: 1
+   * minimum: -1
    * maximum: 2147483647
    * @return length
   **/
   @JsonProperty("length")
   @NotNull
- @Min(1) @Max(2147483647)  public Integer getLength() {
+ @Min(-1) @Max(2147483647)  public Integer getLength() {
     return length;
   }
 

@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import io.swagger.model.BadRequestErrorType;
+import io.swagger.model.ErrorType;
 import javax.validation.constraints.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,38 +21,14 @@ public class BadRequestException   {
   @Schema(example = "400", required = true, description = "")
   private Integer responseCode = null;
   
-  @Schema(example = "Either Nullability / Bad request", required = true, description = "")
-  private String responseMessage = null;
-  public enum ResponseTypeEnum {
-    EITHER_NULLABILITY("Either Nullability"),
-    BAD_REQUEST("Bad request");
-
-    private String value;
-
-    ResponseTypeEnum(String value) {
-      this.value = value;
-    }
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-    @JsonCreator
-    public static ResponseTypeEnum fromValue(String text) {
-      for (ResponseTypeEnum b : ResponseTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }  
-  @Schema(description = "")
-  private ResponseTypeEnum responseType = null;
+  @Schema(required = true, description = "")
+  private String errorCode = null;
+  
+  @Schema(required = true, description = "")
+  private BadRequestErrorType responseMessage = null;
+  
+  @Schema(required = true, description = "")
+  private ErrorType responseType = null;
  /**
    * Get responseCode
    * @return responseCode
@@ -71,20 +49,39 @@ public class BadRequestException   {
   }
 
  /**
+   * Get errorCode
+   * @return errorCode
+  **/
+  @JsonProperty("errorCode")
+  @NotNull
+  public String getErrorCode() {
+    return errorCode;
+  }
+
+  public void setErrorCode(String errorCode) {
+    this.errorCode = errorCode;
+  }
+
+  public BadRequestException errorCode(String errorCode) {
+    this.errorCode = errorCode;
+    return this;
+  }
+
+ /**
    * Get responseMessage
    * @return responseMessage
   **/
   @JsonProperty("responseMessage")
   @NotNull
-  public String getResponseMessage() {
+  public BadRequestErrorType getResponseMessage() {
     return responseMessage;
   }
 
-  public void setResponseMessage(String responseMessage) {
+  public void setResponseMessage(BadRequestErrorType responseMessage) {
     this.responseMessage = responseMessage;
   }
 
-  public BadRequestException responseMessage(String responseMessage) {
+  public BadRequestException responseMessage(BadRequestErrorType responseMessage) {
     this.responseMessage = responseMessage;
     return this;
   }
@@ -94,18 +91,16 @@ public class BadRequestException   {
    * @return responseType
   **/
   @JsonProperty("responseType")
-  public String getResponseType() {
-    if (responseType == null) {
-      return null;
-    }
-    return responseType.getValue();
+  @NotNull
+  public ErrorType getResponseType() {
+    return responseType;
   }
 
-  public void setResponseType(ResponseTypeEnum responseType) {
+  public void setResponseType(ErrorType responseType) {
     this.responseType = responseType;
   }
 
-  public BadRequestException responseType(ResponseTypeEnum responseType) {
+  public BadRequestException responseType(ErrorType responseType) {
     this.responseType = responseType;
     return this;
   }
@@ -117,6 +112,7 @@ public class BadRequestException   {
     sb.append("class BadRequestException {\n");
     
     sb.append("    responseCode: ").append(toIndentedString(responseCode)).append("\n");
+    sb.append("    errorCode: ").append(toIndentedString(errorCode)).append("\n");
     sb.append("    responseMessage: ").append(toIndentedString(responseMessage)).append("\n");
     sb.append("    responseType: ").append(toIndentedString(responseType)).append("\n");
     sb.append("}");

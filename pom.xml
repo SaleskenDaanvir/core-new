@@ -4,7 +4,7 @@
   <artifactId>swagger-cxf-server</artifactId>
   <packaging>war</packaging>
   <name>swagger-cxf-server</name>
-  <description>&lt;b&gt;Introduction&lt;/b&gt;&lt;br&gt;&lt;br&gt;This is collection of User APIs. These are used to create user, fetch user records, update user and delete user.&lt;br&gt;&lt;br&gt; &lt;b&gt;Authentication&lt;/b&gt;&lt;br&gt;&lt;br&gt; Salesken User APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.</description>
+  <description>&lt;b&gt;Introduction&lt;/b&gt;&lt;br&gt;&lt;br&gt;This is collection of Organization APIs. These are used to create organization, fetch organization records, update organization and invoke organization.&lt;br&gt;&lt;br&gt; &lt;b&gt;Authentication&lt;/b&gt;&lt;br&gt;&lt;br&gt; Salesken Organization APIs are authenticated using Basic Authentication with your Authentication API Key and OAuth2. The OAuth2 are available after you sign-up with the Salesken.&lt;br&gt;&lt;br&gt; &lt;b&gt;Error Codes&lt;/b&gt;&lt;br&gt;&lt;br&gt; Error codes are defined in superadmin project &lt;a href&#x3D;\&quot;\&quot;&gt;Error Codes&lt;/a&gt;</description>
   <version>1.0.0</version>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
